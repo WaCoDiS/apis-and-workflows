@@ -1,0 +1,33 @@
+title Publish/Subscribe GDI-DE Component
+
+Participant Message Broker as MB
+Participant Job Repository as JOB
+Participant CKAN Connector as CCON
+Participant GDI-DE Component as GDE
+
+JOB-->MB:message "new job stored" \n(required inputs: GDI-DE i.a.)
+
+MB-->GDE:message "new job stored" \n(required inputs: GDI-DE i.a.)
+
+loop poll for data
+GDE->GDE: query CSW interface for\nISO metadata (by ID)
+
+alt record represents an OGC service
+GDE->GDE: query underlying service\nfor latest data
+GDE->GDE: compare with previously\nretrieved data
+alt data was updated
+GDE-->MB: message "new data" (Data envelope [id: CSW id])
+end alt
+
+else record represents a static data set
+
+alt if first loop execution
+GDE-->MB: message "new data" (Data envelope [id: CSW id])
+end alt
+
+end alt
+
+end loop
+
+MB-->+CCON: message "new data" (Data envelope)
+CCON->CCON: store/update new data (Data envelope)

@@ -1,0 +1,24 @@
+title Publish/Subscribe Sensor Web Component
+
+Participant Message Broker as MB
+Participant Job Repository as JOB
+Participant CKAN Connector as CCON
+Participant Sensor Web as SW
+
+JOB-->MB:message "new job stored" \n(required inputs: Sensor Web i.a.)
+
+MB-->SW:message "new job stored" \n(required inputs: Sensor Web i.a.)
+
+loop poll for data
+SW->SW: query WV SOS \n(by given procedure+feature+property+offering)
+
+SW->SW: compare with previously\nretrieved timestamp of latest measurement
+alt data was updated
+SW-->MB: message "new data" (Data envelope [id: procedure+feature+property+offering])
+end alt
+
+
+end loop
+
+MB-->+CCON: message "new data" (Data envelope)
+CCON->CCON: store/update new data (Data envelope)

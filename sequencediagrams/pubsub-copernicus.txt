@@ -1,0 +1,24 @@
+title Publish/Subscribe Copernicus Component
+
+Participant Message Broker as MB
+Participant Job Repository as JOB
+Participant CKAN Connector as CCON
+Participant Copernicus Component as COP
+
+JOB-->MB:message "new job stored" \n(required inputs: Copernicus S2 i.a.)
+
+MB-->COP:message "new job stored" \n(required inputs: Copernicus S2 i.a.)
+
+loop poll for data
+COP->COP: query Copernicus S2 API \n(by area of interest)
+
+COP->COP: compare with previously\nretrieved timestamp of product
+alt data was updated
+COP-->MB: message "new data" (Data envelope [id: S2 product id])
+end alt
+
+
+end loop
+
+MB-->+CCON: message "new data" (Data envelope)
+CCON->CCON: store/update new data (Data envelope)
