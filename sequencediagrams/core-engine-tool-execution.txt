@@ -1,0 +1,34 @@
+title Data Access API Workflow  
+
+Participant WPS as WPS
+Participant Job Repository as JOB
+Participant Core Engine as CE
+Participant Data Access API \n(Wrapper) as DAA
+Participant CKAN API as CKAN
+
+JOB-->CE:message "new job stored"
+
+CE->+DAA:assess data availability \n(args: ID, data type, time window)
+activate CE
+
+DAA->+CKAN:search data \n(args: ID, data type)
+CKAN->-DAA:return search results
+
+DAA->-CE:return data availability
+
+alt data available
+CE->+DAA:prepare HTTP requests for data \n(args: ID, data type, parameters)
+
+DAA->-CE:return HTTP requests
+else data not available
+CE-->CE:wait until data available \n(subscribe message broker)
+CE->+DAA:prepare HTTP requests for data \n(args: ID, data type, parameters)
+
+DAA->-CE:return HTTP requests
+end
+
+CE-->-WPS:message tool process \n(inputs as HTTP requests)
+
+WPS-->+CE:message process finished
+
+CE->-DAA:store process result
