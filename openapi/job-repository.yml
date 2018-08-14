@@ -1,0 +1,288 @@
+openapi: "3.0.0"
+info:
+  version: 0.1.0
+  title: WaCoDiS Job Repository
+  description: |
+    The API for the WaCoDiS Job Repository
+  termsOfService: https://wacodis.fbg-hsbo.de/
+  contact:
+    name: WaCoDiS Dev Team
+    email: m.rieke@52north.org
+    url: https://github.com/WaCoDiS
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost/jobRepository
+paths:
+  /jobs:
+    get:
+      description: |
+        Returns a paginates list of jobs
+      operationId: retriebeJobs
+      parameters:
+        - $ref: '#/components/parameters/PagePage'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: |
+            job response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedJobResponse'
+                  
+        default:
+          $ref: '#/components/responses/DefaultError'
+    post:
+      description: |
+        Creates a new Job in the repository
+      operationId: createJob
+      requestBody:
+        description: |
+          Job to add to the repository
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+      responses:
+        '201':
+          description: |
+            job response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          headers:
+            Location:
+              schema:
+                type: string
+              description: |
+                the URL where to access the newly created job
+        default:
+          $ref: '#/components/responses/DefaultError'
+  /jobs/{id}:
+    get:
+      description: |
+        Returns a job based on a single ID
+      operationId: retrieveJobById
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of job to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |
+            job response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    delete:
+      description: |
+        deletes a single job based on the ID supplied
+      operationId: deleteJob
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of job to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: |
+            job deleted
+        default:
+          $ref: '#/components/responses/DefaultError'
+components:
+  parameters:
+    PagePage:
+      name: page
+      in: query
+      description: |
+        the page as an offset (default=0)
+      required: false
+      schema:
+        type: integer
+        format: int32
+    PageSize:
+      name: page
+      in: query
+      description: |
+        the maximum number of results (default=100)
+      required: false
+      schema:
+        type: integer
+        format: int32
+  responses:
+    DefaultError:
+      description: |
+        unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    PaginatedResponse:
+      required:
+        - page
+        - size
+        - total
+      properties:
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        total:
+          type: integer
+          format: int32
+    PaginatedJobResponse:
+      allOf:
+        - $ref: '#/components/schemas/PaginatedResponse'
+        - required:
+          - data
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Job'
+    Job:
+      required:
+        - name
+        - areaOfInterest
+        - processingTool
+        - inputs
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: |
+            a human friendly short name
+        description:
+          type: string
+          description: |
+            a more verbose description of the jobs (e.g. purpose, inputs, ...)
+        useCase:
+          type: string
+          description: |
+            A generic use case reference. This can be used to refer to the use cases identified during the
+            initial phase of WaCoDiS
+        created:
+          type: string
+          format: date-time
+        timeInterval:
+          type: string
+          format: duration
+          description: |
+            if present, this describe the recurrency of a job. if not present, the job is treated as a one-time job
+        areaOfInterest:
+          type: object
+          required:
+            - extent 
+          properties:
+            extent:
+              description: |
+                the coordinates, using EPSG:4326, (in analogy to GeoJSON bbox) in the order
+                "southwesterly point followed by more northeasterly point". Schema
+                is [minLon, minLat, maxLon, maxLat]
+              type: array
+              minItems: 4
+              maxItems: 4
+              items: 
+                type: number
+                format: float
+                minimum: -180.0
+                maximum: 180.0
+        processingTool:
+          type: string
+          description: |
+            the processingTool ID as provided by the WPS tool wrapper
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/AbstractSubsetDefinition'
+    AbstractSubsetDefinition:
+      discriminator:
+        propertyName: sourceType
+    SensorWebSubsetDefinition:
+      allOf:
+        - $ref: '#/components/schemas/AbstractSubsetDefinition'
+        - required:
+          - sourceType
+          - offering
+          - featureOfInterest
+          - observedProperty
+          - procedure
+          properties:
+            sourceType:
+              type: string
+              # the discriminator needs to have the same value as the schema objects name. this works at least
+              # with spring generator and jackson deserialization
+              enum: ['SensorWebSubsetDefinition']
+              description: |
+                shall be used to determine the responsible data backend
+            offering:
+              type: string
+            featureOfInterest:
+              type: string
+            observedProperty:
+              type: string
+            procedure:
+              type: string
+    CopernicusSubsetDefinition:
+      allOf:
+        - $ref: '#/components/schemas/AbstractSubsetDefinition'
+        - required:
+          - sourceType
+          - satellite
+          - maximumCloudCoverage
+          properties:
+            sourceType:
+              type: string
+              enum: ['CopernicusSubsetDefinition']
+              description: |
+                shall be used to determine the responsible data backend
+            satellite:
+              type: string
+              enum: [sentinel-1, sentinel-2, sentinel-3]
+            maximumCloudCoverage:
+              type: number
+              format: float
+    GdiDeSubsetDefinition:
+      allOf:
+        - $ref: '#/components/schemas/AbstractSubsetDefinition'
+        - required:
+          - sourceType
+          - catalogueId
+          properties:
+            sourceType:
+              type: string
+              enum: ['GdiDeSubsetDefinition']
+              description: |
+                shall be used to determine the responsible data backend
+            catalogueId:
+              description: |
+                the id of the dataset within the GDI-DE catalogue
+              type: string
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
