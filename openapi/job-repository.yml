@@ -18,8 +18,8 @@ paths:
   /jobs:
     get:
       description: |
-        Returns a paginates list of jobs
-      operationId: retriebeJobs
+        Returns a paginated list of jobs
+      operationId: retrieveJobs
       parameters:
         - $ref: '#/components/parameters/PagePage'
         - $ref: '#/components/parameters/PageSize'
@@ -115,7 +115,7 @@ components:
         type: integer
         format: int32
     PageSize:
-      name: page
+      name: size
       in: query
       description: |
         the maximum number of results (default=100)
