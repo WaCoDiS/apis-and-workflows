@@ -215,25 +215,27 @@ components:
           items:
             $ref: '#/components/schemas/AbstractSubsetDefinition'
     AbstractSubsetDefinition:
+      properties:
+        sourceType:
+          type: string
+          # the discriminator needs to have the same value as the schema objects name. this works at least
+          # with spring generator and jackson deserialization
+          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'GdiDeSubsetDefinition']
+          description: |
+            shall be used to determine the responsible data backend
       discriminator:
         propertyName: sourceType
+      required:
+        - sourceType
     SensorWebSubsetDefinition:
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - required:
-          - sourceType
           - offering
           - featureOfInterest
           - observedProperty
           - procedure
           properties:
-            sourceType:
-              type: string
-              # the discriminator needs to have the same value as the schema objects name. this works at least
-              # with spring generator and jackson deserialization
-              enum: ['SensorWebSubsetDefinition']
-              description: |
-                shall be used to determine the responsible data backend
             offering:
               type: string
             featureOfInterest:
@@ -250,11 +252,6 @@ components:
           - satellite
           - maximumCloudCoverage
           properties:
-            sourceType:
-              type: string
-              enum: ['CopernicusSubsetDefinition']
-              description: |
-                shall be used to determine the responsible data backend
             satellite:
               type: string
               enum: [sentinel-1, sentinel-2, sentinel-3]
@@ -268,11 +265,6 @@ components:
           - sourceType
           - catalogueId
           properties:
-            sourceType:
-              type: string
-              enum: ['GdiDeSubsetDefinition']
-              description: |
-                shall be used to determine the responsible data backend
             catalogueId:
               description: |
                 the id of the dataset within the GDI-DE catalogue
