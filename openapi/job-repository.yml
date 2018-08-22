@@ -18,7 +18,7 @@ paths:
   /jobs:
     get:
       description: |
-        Returns a paginates list of jobs
+        Returns a paginated list of jobs
       operationId: retrieveJobs
       parameters:
         - $ref: '#/components/parameters/PagePage'
@@ -36,13 +36,11 @@ paths:
           $ref: '#/components/responses/DefaultError'
     post:
       description: |
-        Creates a new Job in the
-        repository
+        Creates a new Job in the repository
       operationId: createJob
       requestBody:
         description: |
-          Job to add to the 
-          repository
+          Job to add to the repository
         required: true
         content:
           application/json:
@@ -117,7 +115,7 @@ components:
         type: integer
         format: int32
     PageSize:
-      name: page
+      name: size
       in: query
       description: |
         the maximum number of results (default=100)
