@@ -14,45 +14,45 @@ https://github.com/OpenAPITools/openapi-generator
 
 ### Spring Server
 
-**Full Generation**:
+For convenience, a one-command script is available. It generates models, APIs and
+supporting files and applies additional code formatting (in the style of AOSP):
 
-```
-openapi-generator-cli generate -g spring \
-    --model-package=de.wacodis.api.model \
-    --api-package=de.wacodis.jobrepository.controller \
-    -i job-repository.yml \
-    -o ./build/job-repository
-```
+`/bin/bash generate-job-repository.sh`
 
-**Models Only**:
+**Custom Generation**
+
+Models Only:
 
 ```
 openapi-generator-cli generate -g spring \
     -Dmodels \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobrepository.controller \
+    -DdateLibrary=java8-localdatetime \
     -i job-repository.yml \
     -o ./build/job-repository
 ```
 
-**APIs Only**:
+APIs Only
 
 ```
 openapi-generator-cli generate -g spring \
     -Dapis \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobrepository.controller \
+    -DdateLibrary=java8-localdatetime \
     -i job-repository.yml \
     -o ./build/job-repository
 ```
 
-**supportingFiles Only**:
+supportingFiles Only
 
 ```
 openapi-generator-cli generate -g spring \
     -DsupportingFiles \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobrepository.controller \
+    -DdateLibrary=java8-localdatetime \
     -i job-repository.yml \
     -o ./build/job-repository
 ```
