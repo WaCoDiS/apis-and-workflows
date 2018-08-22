@@ -19,7 +19,7 @@ paths:
     get:
       description: |
         Returns a paginates list of jobs
-      operationId: retriebeJobs
+      operationId: retrieveJobs
       parameters:
         - $ref: '#/components/parameters/PagePage'
         - $ref: '#/components/parameters/PageSize'
@@ -32,15 +32,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedJobResponse'
                   
-        default:
+        '500':
           $ref: '#/components/responses/DefaultError'
     post:
       description: |
-        Creates a new Job in the repository
+        Creates a new Job in the
+        repository
       operationId: createJob
       requestBody:
         description: |
-          Job to add to the repository
+          Job to add to the 
+          repository
         required: true
         content:
           application/json:
@@ -60,7 +62,7 @@ paths:
                 type: string
               description: |
                 the URL where to access the newly created job
-        default:
+        '500':
           $ref: '#/components/responses/DefaultError'
   /jobs/{id}:
     get:
@@ -83,7 +85,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Job'
-        default:
+        '500':
           $ref: '#/components/responses/DefaultError'
     delete:
       description: |
@@ -101,7 +103,7 @@ paths:
         '204':
           description: |
             job deleted
-        default:
+        '500':
           $ref: '#/components/responses/DefaultError'
 components:
   parameters:
@@ -166,6 +168,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         name:
           type: string
           description: |
