@@ -109,6 +109,13 @@ components:
             cloudCoverage:
               type: number
               format: float
+            portal:
+              type: array
+              items:
+                 type: string
+                 enum:
+                  - CODE-DE
+                  - Sentinel-Hub  
     GdiDeDataEnvelope:
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
