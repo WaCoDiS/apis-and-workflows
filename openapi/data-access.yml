@@ -84,6 +84,9 @@ components:
           - observedProperty
           - procedure
           properties:
+            serviceUrl:
+              type: string
+              default: http://fluggs.wupperverband.de/sos2/sos
             offering:
               type: string
             featureOfInterest:
@@ -116,6 +119,8 @@ components:
                  enum:
                   - CODE-DE
                   - Sentinel-Hub  
+              default:
+                - CODE-DE
     GdiDeDataEnvelope:
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
