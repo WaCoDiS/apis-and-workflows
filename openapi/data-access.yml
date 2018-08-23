@@ -83,10 +83,10 @@ components:
           - featureOfInterest
           - observedProperty
           - procedure
+          - serviceUrl
           properties:
             serviceUrl:
               type: string
-              default: http://fluggs.wupperverband.de/sos2/sos
             offering:
               type: string
             featureOfInterest:
@@ -102,6 +102,7 @@ components:
           - datasetId
           - satellite
           - cloudCoverage
+          - portal
           properties:
             datasetId:
               description:
@@ -113,14 +114,8 @@ components:
               type: number
               format: float
             portal:
-              type: array
-              items:
-                 type: string
-                 enum:
-                  - CODE-DE
-                  - Sentinel-Hub  
-              default:
-                - CODE-DE
+              type: string
+              enum: [Code-DE, Sentinel-Hub]
     GdiDeDataEnvelope:
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
