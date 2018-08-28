@@ -212,6 +212,7 @@ components:
             the processingTool ID as provided by the WPS tool wrapper
         inputs:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/AbstractSubsetDefinition'
     AbstractSubsetDefinition:
@@ -248,7 +249,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - required:
-          - sourceType
           - satellite
           - maximumCloudCoverage
           properties:
@@ -262,7 +262,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - required:
-          - sourceType
           - catalogueId
           properties:
             catalogueId:
