@@ -29,7 +29,7 @@ done
 
 function latest.tag {
   local uri="https://api.github.com/repos/${1}/tags"
-  curl -s ${uri} | python -c "import sys, json; print json.load(sys.stdin)[0]['name'][1:]"
+  curl -s ${uri} | python -c "from __future__ import print_function; import sys, json; print(json.load(sys.stdin)[0]['name'][1:])"
 }
 
 ghrepo=openapitools/openapi-generator
