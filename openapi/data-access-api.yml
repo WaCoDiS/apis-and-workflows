@@ -1,0 +1,115 @@
+openapi: "3.0.0"
+info:
+  version: 0.1.0
+  title: WaCoDiS DataAccess API
+  description: |
+    The API for the WaCoDiS Data Access
+  termsOfService: https://wacodis.fbg-hsbo.de/
+  contact:
+    name: WaCoDiS Dev Team
+    email: arne.vogt@hs-bochum.de
+    url: https://github.com/WaCoDiS
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost/dataAccess
+paths:     
+  /search:
+    post:
+      description: |
+        searches for specific spatial data
+      operationId: searchRessources
+      requestBody:
+        description: |
+          search criteria
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/job-repository.yml#/components/schemas/CopernicusSubsetDefinition'
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/job-repository.yml#/components/schemas/SensorWebSubsetDefinition'
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/job-repository.yml#/components/schemas/GdiDeSubsetDefinition'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/AbstractRessource'
+        '500':
+          $ref: '#/components/responses/defaultError'
+  /insert:
+    post:
+      description: |
+        insert ressource
+      operationId: insertRessource
+      requestBody:
+        description: |
+          data envelope for the ressource to be inserted
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/CopernicusDataEnvelope'
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/GdiDeDataEnvelope'
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/SensorWebDataEnvelope'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/CopernicusDataEnvelope'
+                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/GdiDeDataEnvelope'
+                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/SensorWebDataEnvelope'
+        '500':
+          $ref: '#/components/responses/defaultError'
+components:
+  responses:
+    defaultError:
+      description: |
+        unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    AbstractRessource:
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+          enum: [GET, POST]
+      discriminator:
+        propertyName: method
+      required:
+        - method
+        - url
+    PostRessource:
+      allOf:
+        - $ref: '#/components/schemas/AbstractRessource'
+        - required:
+          - body
+          properties:
+            body:
+              type: string
+    GetRessource:
+      allOf:
+        - $ref: '#/components/schemas/AbstractRessource'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
