@@ -24,11 +24,11 @@ supporting files and applies additional code formatting (in the style of AOSP):
 Models Only:
 
 ```
-lib/openapi-generator-cli generate -g spring \
+lib/openapi-generator-cli.sh generate -g spring \
     -Dmodels \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobrepository.controller \
-    -DdateLibrary=java8-localdatetime \
+    -DdateLibrary=joda \
     -i job-repository.yml \
     -o ./build/job-repository
 ```
@@ -36,11 +36,11 @@ lib/openapi-generator-cli generate -g spring \
 APIs Only:
 
 ```
-lib/openapi-generator-cli generate -g spring \
+lib/openapi-generator-cli.sh generate -g spring \
     -Dapis \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobrepository.controller \
-    -DdateLibrary=java8-localdatetime \
+    -DdateLibrary=joda \
     -i job-repository.yml \
     -o ./build/job-repository
 ```
@@ -48,11 +48,11 @@ lib/openapi-generator-cli generate -g spring \
 supportingFiles Only:
 
 ```
-lib/openapi-generator-cli generate -g spring \
+lib/openapi-generator-cli.sh generate -g spring \
     -DsupportingFiles \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobrepository.controller \
-    -DdateLibrary=java8-localdatetime \
+    -DdateLibrary=joda \
     -i job-repository.yml \
     -o ./build/job-repository
 ```
@@ -75,7 +75,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     -Dmodels \
     --model-package=de.wacodis.dataaccess.model \
     --api-package=de.wacodis.dataaccess.controller \
-    -DdateLibrary=java8-localdatetime \
+    -DdateLibrary=joda \
     -i data-access.yml \
     -o ./build/data-access
 ```
@@ -87,7 +87,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     -Dapis \
     --model-package=de.wacodis.dataaccess.model \
     --api-package=de.wacodis.dataaccess.controller \
-    -DdateLibrary=java8-localdatetime \
+    -DdateLibrary=joda \
     -i data-access.yml \
     -o ./build/data-access
 ```
@@ -99,7 +99,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     -DsupportingFiles \
     --model-package=de.wacodis.dataaccess.model \
     --api-package=de.wacodis.dataaccess.controller \
-    -DdateLibrary=java8-localdatetime \
+    -DdateLibrary=joda \
     -i data-access.yml \
     -o ./build/data-access
 ```

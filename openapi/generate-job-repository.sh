@@ -4,7 +4,7 @@ rm -rf ./build
 lib/openapi-generator-cli.sh generate -g spring \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobrepository.controller \
-    -DdateLibrary=java8-localdatetime \
+    -DdateLibrary=joda \
     -i job-repository.yml \
     -o ./build/job-repository
 
