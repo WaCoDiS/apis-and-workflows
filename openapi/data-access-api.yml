@@ -1,115 +1,133 @@
 openapi: "3.0.0"
 info:
   version: 0.1.0
-  title: WaCoDiS DataAccess API
+  title: WaCoDiS Job Repository
   description: |
-    The API for the WaCoDiS Data Access
+    The API for the WaCoDiS Job Repository
   termsOfService: https://wacodis.fbg-hsbo.de/
   contact:
     name: WaCoDiS Dev Team
-    email: arne.vogt@hs-bochum.de
+    email: m.rieke@52north.org
     url: https://github.com/WaCoDiS
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: http://localhost/dataAccess
-paths:     
-  /search:
-    post:
+  - url: http://localhost/jobRepository
+paths:
+  /jobs:
+    get:
       description: |
-        searches for specific spatial data
-      operationId: searchRessources
-      requestBody:
-        description: |
-          search criteria
-        required: true
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/job-repository.yml#/components/schemas/CopernicusSubsetDefinition'
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/job-repository.yml#/components/schemas/SensorWebSubsetDefinition'
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/job-repository.yml#/components/schemas/GdiDeSubsetDefinition'
+        Returns a paginated list of jobs
+      operationId: retrieveJobs
+      parameters:
+        - $ref: '#/components/parameters/PagePage'
+        - $ref: '#/components/parameters/PageSize'
       responses:
         '200':
-          description: OK
+          description: |
+            job response
           content:
             application/json:
               schema:
-                type: array
-                items: 
-                  $ref: '#/components/schemas/AbstractRessource'
+                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/PaginatedJobResponse'
+
         '500':
-          $ref: '#/components/responses/defaultError'
-  /insert:
+          $ref: '#/components/responses/DefaultError'
     post:
       description: |
-        insert ressource
-      operationId: insertRessource
+        Creates a new Job in the repository
+      operationId: createJob
       requestBody:
         description: |
-          data envelope for the ressource to be inserted
+          Job to add to the repository
         required: true
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/CopernicusDataEnvelope'
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/GdiDeDataEnvelope'
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/SensorWebDataEnvelope'
+              $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Job'
       responses:
         '201':
-          description: OK
+          description: |
+            job response
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/CopernicusDataEnvelope'
-                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/GdiDeDataEnvelope'
-                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/data-access.yml#/components/schemas/SensorWebDataEnvelope'
+                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Job'
+          headers:
+            Location:
+              schema:
+                type: string
+              description: |
+                the URL where to access the newly created job
         '500':
-          $ref: '#/components/responses/defaultError'
+          $ref: '#/components/responses/DefaultError'
+  /jobs/{id}:
+    get:
+      description: |
+        Returns a job based on a single ID
+      operationId: retrieveJobById
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of job to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |
+            job response
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Job'
+        '500':
+          $ref: '#/components/responses/DefaultError'
+    delete:
+      description: |
+        deletes a single job based on the ID supplied
+      operationId: deleteJob
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of job to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: |
+            job deleted
+        '500':
+          $ref: '#/components/responses/DefaultError'
 components:
+  parameters:
+    PagePage:
+      name: page
+      in: query
+      description: |
+        the page as an offset (default=0)
+      required: false
+      schema:
+        type: integer
+        format: int32
+    PageSize:
+      name: size
+      in: query
+      description: |
+        the maximum number of results (default=100)
+      required: false
+      schema:
+        type: integer
+        format: int32
   responses:
-    defaultError:
+    DefaultError:
       description: |
         unexpected error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
-  schemas:
-    AbstractRessource:
-      properties:
-        url:
-          type: string
-        method:
-          type: string
-          enum: [GET, POST]
-      discriminator:
-        propertyName: method
-      required:
-        - method
-        - url
-    PostRessource:
-      allOf:
-        - $ref: '#/components/schemas/AbstractRessource'
-        - required:
-          - body
-          properties:
-            body:
-              type: string
-    GetRessource:
-      allOf:
-        - $ref: '#/components/schemas/AbstractRessource'
-    Error:
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
+            $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Error'
