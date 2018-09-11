@@ -1,130 +1,78 @@
 openapi: "3.0.0"
 info:
   version: 0.1.0
-  title: WaCoDiS Job Repository
+  title: WaCoDiS DataAccess API
   description: |
-    The API for the WaCoDiS Job Repository
+    The API for the WaCoDiS Data Access
   termsOfService: https://wacodis.fbg-hsbo.de/
   contact:
     name: WaCoDiS Dev Team
-    email: m.rieke@52north.org
+    email: arne.vogt@hs-bochum.de
     url: https://github.com/WaCoDiS
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: http://localhost/jobRepository
+  - url: http://localhost/dataAccess
 paths:
-  /jobs:
-    get:
-      description: |
-        Returns a paginated list of jobs
-      operationId: retrieveJobs
-      parameters:
-        - $ref: '#/components/parameters/PagePage'
-        - $ref: '#/components/parameters/PageSize'
-      responses:
-        '200':
-          description: |
-            job response
-          content:
-            application/json:
-              schema:
-                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/PaginatedJobResponse'
-
-        '500':
-          $ref: '#/components/responses/DefaultError'
+  /search:
     post:
       description: |
-        Creates a new Job in the repository
-      operationId: createJob
+        searches for specific spatial data
+      operationId: searchResources
       requestBody:
         description: |
-          Job to add to the repository
+          search criteria
         required: true
         content:
           application/json:
             schema:
-              $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Job'
-      responses:
-        '201':
-          description: |
-            job response
-          content:
-            application/json:
-              schema:
-                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Job'
-          headers:
-            Location:
-              schema:
-                type: string
-              description: |
-                the URL where to access the newly created job
-        '500':
-          $ref: '#/components/responses/DefaultError'
-  /jobs/{id}:
-    get:
-      description: |
-        Returns a job based on a single ID
-      operationId: retrieveJobById
-      parameters:
-        - name: id
-          in: path
-          description: |
-            ID of job to retrieve
-          required: true
-          schema:
-            type: string
+              oneOf:
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/CopernicusSubsetDefinition'
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/SensorWebSubsetDefinition'
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/GdiDeSubsetDefinition'
       responses:
         '200':
-          description: |
-            job response
+          description: OK
           content:
             application/json:
               schema:
-                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Job'
+                type: array
+                items:
+                  $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/AbstractResource'
         '500':
-          $ref: '#/components/responses/DefaultError'
-    delete:
+          $ref: '#/components/responses/defaultError'
+  /insert:
+    post:
       description: |
-        deletes a single job based on the ID supplied
-      operationId: deleteJob
-      parameters:
-        - name: id
-          in: path
-          description: |
-            ID of job to delete
-          required: true
-          schema:
-            type: string
+        insert resource
+      operationId: insertResource
+      requestBody:
+        description: |
+          data envelope for the resource to be inserted
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/CopernicusDataEnvelope'
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/GdiDeDataEnvelope'
+                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/SensorWebDataEnvelope'
       responses:
-        '204':
-          description: |
-            job deleted
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/CopernicusDataEnvelope'
+                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/GdiDeDataEnvelope'
+                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/SensorWebDataEnvelope'
         '500':
-          $ref: '#/components/responses/DefaultError'
+          $ref: '#/components/responses/defaultError'
 components:
-  parameters:
-    PagePage:
-      name: page
-      in: query
-      description: |
-        the page as an offset (default=0)
-      required: false
-      schema:
-        type: integer
-        format: int32
-    PageSize:
-      name: size
-      in: query
-      description: |
-        the maximum number of results (default=100)
-      required: false
-      schema:
-        type: integer
-        format: int32
   responses:
-    DefaultError:
+    defaultError:
       description: |
         unexpected error
       content:
