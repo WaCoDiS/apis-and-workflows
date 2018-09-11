@@ -1,9 +1,9 @@
 openapi: "3.0.0"
 info:
   version: 0.1.0
-  title: WaCoDiS Data Access
+  title: WaCoDiS Model
   description: |
-    The API for the WaCoDiS Data Access
+    Schema definitions for WaCoDiS
   termsOfService: https://wacodis.fbg-hsbo.de/
   contact:
     name: WaCoDiS Dev Team
