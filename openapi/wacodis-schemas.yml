@@ -130,7 +130,7 @@ components:
               description: |
                 the id of the dataset within the GDI-DE catalogue
               type: string
-    AbstractRessource:
+    AbstractResource:
       properties:
         url:
           type: string
@@ -142,17 +142,20 @@ components:
       required:
         - method
         - url
-    PostRessource:
+    PostResource:
       allOf:
-        - $ref: '#/components/schemas/AbstractRessource'
+        - $ref: '#/components/schemas/AbstractResource'
         - required:
           - body
+          - contentType
           properties:
             body:
               type: string
-    GetRessource:
+            contentType:
+              type: string
+    GetResource:
       allOf:
-        - $ref: '#/components/schemas/AbstractRessource'
+        - $ref: '#/components/schemas/AbstractResource'
     PaginatedResponse:
       required:
         - page
