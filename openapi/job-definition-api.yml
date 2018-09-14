@@ -1,9 +1,9 @@
 openapi: "3.0.0"
 info:
   version: 0.1.0
-  title: WaCoDiS Job Repository
+  title: WaCoDiS JobDefinition API
   description: |
-    The API for the WaCoDiS Job Repository
+    The API for the WaCoDiS JobDefinitions
   termsOfService: https://wacodis.fbg-hsbo.de/
   contact:
     name: WaCoDiS Dev Team
@@ -13,117 +13,103 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: http://localhost/jobRepository
+  - url: http://localhost/wacodis-job-definition-api
 paths:
-  /jobs:
+  /jobDefinitions:
     get:
       description: |
-        Returns a paginated list of jobs
-      operationId: retrieveJobs
+        Returns a paginated list of WacodisJobDefinition
+      operationId: retrieveWacodisJobDefinitions
       parameters:
         - $ref: '#/components/parameters/PagePage'
         - $ref: '#/components/parameters/PageSize'
       responses:
         '200':
           description: |
-            job response
+            WacodisJobDefinition response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedJobResponse'
+                $ref: '#/components/schemas/PaginatedWacodisJobDefinitionResponse'
         '500':
           $ref: '#/components/responses/DefaultError'
     post:
       description: |
-        Creates a new Job in the repository
-      operationId: createJob
+        Creates a new WacodisJobDefinition in the repository
+      operationId: createWacodisJobDefinition
       requestBody:
         description: |
-          Job to add to the repository
+          WacodisJobDefinition to add to the repository
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Job'
+              $ref: '#/components/schemas/WacodisJobDefinition'
       responses:
         '201':
           description: |
-            job response
+            WacodisJobDefinition response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/WacodisJobDefinition'
           headers:
             Location:
               schema:
                 type: string
               description: |
-                the URL where to access the newly created job
+                the URL where to access the newly created WacodisJobDefinition
         '500':
           $ref: '#/components/responses/DefaultError'
-  /jobs/{id}:
+  /jobDefinitions/{id}:
     get:
       description: |
-        Returns a job based on a single ID
-      operationId: retrieveJobById
+        Returns a WacodisJobDefinition based on a single ID
+      operationId: retrieveWacodisJobDefinitionById
       parameters:
         - name: id
           in: path
           description: |
-            ID of job to retrieve
+            ID of WacodisJobDefinition to retrieve
           required: true
           schema:
             type: string
       responses:
         '200':
           description: |
-            job response
+            WacodisJobDefinition response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/WacodisJobDefinition'
         '500':
           $ref: '#/components/responses/DefaultError'
     delete:
       description: |
-        deletes a single job based on the ID supplied
-      operationId: deleteJob
+        deletes a single WacodisJobDefinition based on the ID supplied
+      operationId: deleteWacodisJobDefinition
       parameters:
         - name: id
           in: path
           description: |
-            ID of job to delete
+            ID of WacodisJobDefinition to delete
           required: true
           schema:
             type: string
       responses:
         '204':
           description: |
-            job deleted
+            WacodisJobDefinition deleted
         '500':
           $ref: '#/components/responses/DefaultError'
 components:
   schemas:
-    AbstractDataEnvelope:
-      $ref: './wacodis-schemas.yml#/components/schemas/AbstractDataEnvelope'
-    SensorWebDataEnvelope:
-      $ref: './wacodis-schemas.yml#/components/schemas/SensorWebDataEnvelope'
-    CopernicusDataEnvelope:
-      $ref: './wacodis-schemas.yml#/components/schemas/CopernicusDataEnvelope'
-    GdiDeDataEnvelope:
-      $ref: './wacodis-schemas.yml#/components/schemas/GdiDeDataEnvelope'
-    AbstractResource:
-      $ref: './wacodis-schemas.yml#/components/schemas/AbstractResource'
-    PostResource:
-      $ref: './wacodis-schemas.yml#/components/schemas/PostResource'
-    GetResource:
-      $ref: './wacodis-schemas.yml#/components/schemas/GetResource'
     PaginatedResponse:
       $ref: './wacodis-schemas.yml#/components/schemas/PaginatedResponse'
-    PaginatedJobResponse:
-      $ref: './wacodis-schemas.yml#/components/schemas/PaginatedJobResponse'
-    Job:
-      $ref: './wacodis-schemas.yml#/components/schemas/Job'
+    PaginatedWacodisJobDefinitionResponse:
+      $ref: './wacodis-schemas.yml#/components/schemas/PaginatedWacodisJobDefinitionResponse'
+    WacodisJobDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/WacodisJobDefinition'
     AbstractSubsetDefinition:
       $ref: './wacodis-schemas.yml#/components/schemas/AbstractSubsetDefinition'
     SensorWebSubsetDefinition:

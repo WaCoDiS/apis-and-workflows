@@ -158,7 +158,7 @@ components:
         total:
           type: integer
           format: int32
-    PaginatedJobResponse:
+    PaginatedWacodisJobDefinitionResponse:
       allOf:
         - $ref: '#/components/schemas/PaginatedResponse'
         - type: object
@@ -168,8 +168,8 @@ components:
             data:
               type: array
               items:
-                $ref: '#/components/schemas/Job'
-    Job:
+                $ref: '#/components/schemas/WacodisJobDefinition'
+    WacodisJobDefinition:
       required:
         - name
         - areaOfInterest
@@ -186,7 +186,7 @@ components:
         description:
           type: string
           description: |
-            a more verbose description of the jobs (e.g. purpose, inputs, ...)
+            a more verbose description of the WacodisJobDefinitions (e.g. purpose, inputs, ...)
         useCase:
           type: string
           description: |
@@ -199,7 +199,7 @@ components:
           type: string
           format: duration
           description: |
-            if present, this describe the recurrency of a job. if not present, the job is treated as a one-time job
+            if present, this describe the recurrency of a WacodisJobDefinition. if not present, the WacodisJobDefinition is treated as a one-time WacodisJobDefinition
         areaOfInterest:
           type: object
           required:

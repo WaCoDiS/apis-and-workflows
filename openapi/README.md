@@ -10,14 +10,14 @@ for generating source code based on the API documents.
 
 https://github.com/OpenAPITools/openapi-generator
 
-## Job API
+## Job Definition API
 
 ### Java / Spring
 
 For convenience, a one-command script is available. It generates models, APIs and
 supporting files and applies additional code formatting (in the style of AOSP):
 
-`/bin/bash generate-job-api.sh`
+`/bin/bash generate-job-definition.sh`
 
 **Custom Generation**
 
@@ -27,10 +27,10 @@ Models Only:
 lib/openapi-generator-cli.sh generate -g spring \
     -Dmodels \
     --model-package=de.wacodis.api.model \
-    --api-package=de.wacodis.jobrepository.controller \
+    --api-package=de.wacodis.jobdefinition.controller \
     -DdateLibrary=joda \
-    -i job-repository.yml \
-    -o ./build/job-repository
+    -i job-definition-api.yml \
+    -o ./build/job-definition-api
 ```
 
 APIs Only:
@@ -39,10 +39,10 @@ APIs Only:
 lib/openapi-generator-cli.sh generate -g spring \
     -Dapis \
     --model-package=de.wacodis.api.model \
-    --api-package=de.wacodis.jobrepository.controller \
+    --api-package=de.wacodis.jobdefinition.controller \
     -DdateLibrary=joda \
-    -i job-repository.yml \
-    -o ./build/job-repository
+    -i job-definition-api.yml \
+    -o ./build/job-definition-api
 ```
 
 supportingFiles Only:
@@ -51,10 +51,10 @@ supportingFiles Only:
 lib/openapi-generator-cli.sh generate -g spring \
     -DsupportingFiles \
     --model-package=de.wacodis.api.model \
-    --api-package=de.wacodis.jobrepository.controller \
+    --api-package=de.wacodis.jobdefinition.controller \
     -DdateLibrary=joda \
-    -i job-repository.yml \
-    -o ./build/job-repository
+    -i job-definition-api.yml \
+    -o ./build/job-definition-api
 ```
 
 ## Data Access API
