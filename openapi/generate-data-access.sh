@@ -8,5 +8,5 @@ lib/openapi-generator-cli.sh generate -g spring \
     -i data-access-api.yml \
     -o ./build/data-access-api
 
-lib/google-format-java-cli.sh --aosp --replace ./build/data-access/src/main/java/de/wacodis/dataaccess/model/* ./build/data-access/src/main/java/de/wacodis/dataaccess/controller/*
+lib/google-format-java-cli.sh --aosp --replace ./build/data-access-api/src/main/java/de/wacodis/dataaccess/model/* ./build/data-access-api/src/main/java/de/wacodis/dataaccess/controller/*
 

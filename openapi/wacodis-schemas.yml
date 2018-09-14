@@ -1,20 +1,3 @@
-openapi: "3.0.0"
-info:
-  version: 0.1.0
-  title: WaCoDiS Model
-  description: |
-    Schema definitions for WaCoDiS
-  termsOfService: https://wacodis.fbg-hsbo.de/
-  contact:
-    name: WaCoDiS Dev Team
-    email: sebastian.drost@hs-bochum.de
-    url: https://github.com/WaCoDiS
-  license:
-    name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0.html
-servers:
-  - url: http://localhost/dataAccess
-paths: {}
 components:
   schemas:
     AbstractDataEnvelope:
@@ -25,7 +8,7 @@ components:
       properties:
         sourceType:
           type: string
-          enum: [SensorWebDataEnvelope, CopernicusDataEnvelope, GdiDeDataEnvelope]
+          enum: ['SensorWebDataEnvelope', 'CopernicusDataEnvelope', 'GdiDeDataEnvelope']
           description: |
             shall be used to determine the responsible data backend
         areaOfInterest:
@@ -78,7 +61,8 @@ components:
     SensorWebDataEnvelope:
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
-        - required:
+        - type: object
+          required:
           - offering
           - featureOfInterest
           - observedProperty
@@ -98,7 +82,8 @@ components:
     CopernicusDataEnvelope:
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
-        - required:
+        - type: object
+          required:
           - datasetId
           - satellite
           - cloudCoverage
@@ -119,7 +104,8 @@ components:
     GdiDeDataEnvelope:
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
-        - required:
+        - type: object
+          required:
           - recordRefId
           properties:
             catalougeUrl:
@@ -136,7 +122,7 @@ components:
           type: string
         method:
           type: string
-          enum: [GET, POST]
+          enum: ['GetResource', 'PostResource']
       discriminator:
         propertyName: method
       required:
@@ -145,7 +131,8 @@ components:
     PostResource:
       allOf:
         - $ref: '#/components/schemas/AbstractResource'
-        - required:
+        - type: object
+          required:
           - body
           - contentType
           properties:
@@ -174,7 +161,8 @@ components:
     PaginatedJobResponse:
       allOf:
         - $ref: '#/components/schemas/PaginatedResponse'
-        - required:
+        - type: object
+          required:
           - data
           properties:
             data:
@@ -255,7 +243,8 @@ components:
     SensorWebSubsetDefinition:
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
-        - required:
+        - type: object
+          required:
           - offering
           - featureOfInterest
           - observedProperty
@@ -272,7 +261,8 @@ components:
     CopernicusSubsetDefinition:
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
-        - required:
+        - type: object
+          required:
           - satellite
           - maximumCloudCoverage
           properties:
@@ -285,7 +275,8 @@ components:
     GdiDeSubsetDefinition:
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
-        - required:
+        - type: object
+          required:
           - catalogueId
           properties:
             catalogueId:

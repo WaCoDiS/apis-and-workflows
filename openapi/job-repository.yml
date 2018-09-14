@@ -30,8 +30,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/PaginatedJobResponse'
-
+                $ref: '#/components/schemas/PaginatedJobResponse'
         '500':
           $ref: '#/components/responses/DefaultError'
     post:
@@ -45,7 +44,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Job'
+              $ref: '#/components/schemas/Job'
       responses:
         '201':
           description: |
@@ -53,7 +52,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Job'
+                $ref: '#/components/schemas/Job'
           headers:
             Location:
               schema:
@@ -82,7 +81,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Job'
+                $ref: '#/components/schemas/Job'
         '500':
           $ref: '#/components/responses/DefaultError'
     delete:
@@ -104,6 +103,37 @@ paths:
         '500':
           $ref: '#/components/responses/DefaultError'
 components:
+  schemas:
+    AbstractDataEnvelope:
+      $ref: './wacodis-schemas.yml#/components/schemas/AbstractDataEnvelope'
+    SensorWebDataEnvelope:
+      $ref: './wacodis-schemas.yml#/components/schemas/SensorWebDataEnvelope'
+    CopernicusDataEnvelope:
+      $ref: './wacodis-schemas.yml#/components/schemas/CopernicusDataEnvelope'
+    GdiDeDataEnvelope:
+      $ref: './wacodis-schemas.yml#/components/schemas/GdiDeDataEnvelope'
+    AbstractResource:
+      $ref: './wacodis-schemas.yml#/components/schemas/AbstractResource'
+    PostResource:
+      $ref: './wacodis-schemas.yml#/components/schemas/PostResource'
+    GetResource:
+      $ref: './wacodis-schemas.yml#/components/schemas/GetResource'
+    PaginatedResponse:
+      $ref: './wacodis-schemas.yml#/components/schemas/PaginatedResponse'
+    PaginatedJobResponse:
+      $ref: './wacodis-schemas.yml#/components/schemas/PaginatedJobResponse'
+    Job:
+      $ref: './wacodis-schemas.yml#/components/schemas/Job'
+    AbstractSubsetDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/AbstractSubsetDefinition'
+    SensorWebSubsetDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/SensorWebSubsetDefinition'
+    CopernicusSubsetDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/CopernicusSubsetDefinition'
+    GdiDeSubsetDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/GdiDeSubsetDefinition'
+    Error:
+      $ref: './wacodis-schemas.yml#/components/schemas/Error'
   parameters:
     PagePage:
       name: page
@@ -130,4 +160,4 @@ components:
       content:
         application/json:
           schema:
-            $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Error'
+            $ref: '#/components/schemas/Error'

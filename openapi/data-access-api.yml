@@ -27,7 +27,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/AbstractSubsetDefinition'
+              $ref: '#/components/schemas/AbstractSubsetDefinition'
       responses:
         '200':
           description: OK
@@ -36,7 +36,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/AbstractResource'
+                  $ref: '#/components/schemas/AbstractResource'
         '500':
           $ref: '#/components/responses/defaultError'
   /insert:
@@ -51,18 +51,42 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/AbstractDataEnvelope'
+              $ref: '#/components/schemas/AbstractDataEnvelope'
       responses:
         '201':
           description: OK
           content:
             application/json:
               schema:
-                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/AbstractDataEnvelope'
-                 
+                $ref: '#/components/schemas/AbstractDataEnvelope'
         '500':
           $ref: '#/components/responses/defaultError'
 components:
+  schemas:
+    AbstractDataEnvelope:
+      $ref: './wacodis-schemas.yml#/components/schemas/AbstractDataEnvelope'
+    SensorWebDataEnvelope:
+      $ref: './wacodis-schemas.yml#/components/schemas/SensorWebDataEnvelope'
+    CopernicusDataEnvelope:
+      $ref: './wacodis-schemas.yml#/components/schemas/CopernicusDataEnvelope'
+    GdiDeDataEnvelope:
+      $ref: './wacodis-schemas.yml#/components/schemas/GdiDeDataEnvelope'
+    AbstractResource:
+      $ref: './wacodis-schemas.yml#/components/schemas/AbstractResource'
+    PostResource:
+      $ref: './wacodis-schemas.yml#/components/schemas/PostResource'
+    GetResource:
+      $ref: './wacodis-schemas.yml#/components/schemas/GetResource'
+    AbstractSubsetDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/AbstractSubsetDefinition'
+    SensorWebSubsetDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/SensorWebSubsetDefinition'
+    CopernicusSubsetDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/CopernicusSubsetDefinition'
+    GdiDeSubsetDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/GdiDeSubsetDefinition'
+    Error:
+      $ref: './wacodis-schemas.yml#/components/schemas/Error'
   responses:
     defaultError:
       description: |
@@ -70,4 +94,4 @@ components:
       content:
         application/json:
           schema:
-            $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/Error'
+            $ref: '#/components/schemas/Error'
