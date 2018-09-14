@@ -27,10 +27,7 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/CopernicusSubsetDefinition'
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/SensorWebSubsetDefinition'
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/GdiDeSubsetDefinition'
+              $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/AbstractSubsetDefinition'
       responses:
         '200':
           description: OK
@@ -54,20 +51,15 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/CopernicusDataEnvelope'
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/GdiDeDataEnvelope'
-                - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/SensorWebDataEnvelope'
+              $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/AbstractDataEnvelope'
       responses:
         '201':
           description: OK
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/CopernicusDataEnvelope'
-                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/GdiDeDataEnvelope'
-                  - $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/SensorWebDataEnvelope'
+                $ref: 'https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/openapi/wacodis-schemas.yml#/components/schemas/AbstractDataEnvelope'
+                 
         '500':
           $ref: '#/components/responses/defaultError'
 components:
