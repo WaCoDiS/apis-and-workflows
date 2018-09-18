@@ -13,3 +13,8 @@ into the Swagger Editor (http://editor.swagger.io/).
 
 Sequence diagrams are created with https://www.websequencediagrams.com/.
 File contents can be pasted into the application to generate visualizations.
+
+## Component diagrams
+
+Component diagrams are created with https://www.draw.io/.
+Files can be loaded into the application to generate visualizations.
