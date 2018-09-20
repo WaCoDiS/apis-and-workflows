@@ -1,3 +1,28 @@
+openapi: "3.0.0"
+info:
+  version: 0.1.0
+  title: WaCoDiS Schema Definitions
+  description: |
+    The data models for WaCoDiS
+  termsOfService: https://wacodis.fbg-hsbo.de/
+  contact:
+    name: WaCoDiS Dev Team
+    email: m.rieke@52north.org
+    url: https://github.com/WaCoDiS
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /:
+    get:
+      description: N/A
+      responses:
+        default:
+          description: N/A
+          content:
+            application/json:
+              schema:
+                type: object
 components:
   schemas:
     AbstractDataEnvelope:
