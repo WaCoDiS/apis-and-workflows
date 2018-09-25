@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wps:Process xmlns:wps="http://www.opengis.net/wps/2.0"
+	xmlns:ows="http://www.opengis.net/ows/2.0"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.opengis.net/wps/2.0 ../wps.xsd">
+	<ows:Title>Land Cover Classification</ows:Title>
+	<ows:Abstract>Perform a land cover classification for optical images.</ows:Abstract>
+	<ows:Identifier>de.hsbo.wacodis.land_cover_classification</ows:Identifier>
+	<wps:Input minOccurs="1" maxOccurs="1">
+		<ows:Title>Optical images</ows:Title>
+		<ows:Abstract>Optical images for the land cover classification.</ows:Abstract>
+		<ows:Identifier>OPTICAL_IMAGES</ows:Identifier>
+		<wps:Input minOccurs="1" maxOccurs="unbounded">
+			<ows:Title>Optical images sources</ows:Title>
+			<ows:Abstract>Sources for the optical images</ows:Abstract>
+			<ows:Identifier>SOURCES</ows:Identifier>
+			<wps:LiteralData >
+				<wps:Format mimeType="text/plain" default="true" />
+				<LiteralDataDomain default="true">
+					<ows:AnyValue />
+					<ows:DataType
+						ows:reference="http://www.w3.org/2001/XMLSchema#string">String</ows:DataType>
+				</LiteralDataDomain>
+			</wps:LiteralData>
+		</wps:Input>
+		<wps:Input minOccurs="1" maxOccurs="1">
+			<ows:Title>Type for optical images source</ows:Title>
+			<ows:Abstract>Type for optical images source</ows:Abstract>
+			<ows:Identifier>TYPE</ows:Identifier>
+			<wps:LiteralData>
+				<wps:Format mimeType="text/plain" default="true" />
+				<LiteralDataDomain default="true">
+					<ows:AllowedValues>
+						<ows:Value>Sentinel-2</ows:Value>
+						<ows:Value>Aerial_Image</ows:Value>
+					</ows:AllowedValues>
+					<ows:DataType
+						ows:reference="http://www.w3.org/2001/XMLSchema#string">String</ows:DataType>
+				</LiteralDataDomain>
+			</wps:LiteralData>
+		</wps:Input>
+	</wps:Input>
+	<wps:Input minOccurs="1" maxOccurs="1">
+		<ows:Title>Reference data</ows:Title>
+		<ows:Abstract>Reference data for the land cover classification</ows:Abstract>
+		<ows:Identifier>REFERENCE_DATA</ows:Identifier>
+		<wps:Input minOccurs="1" maxOccurs="unbounded">
+			<ows:Title>Reference data sources</ows:Title>
+			<ows:Abstract>Sources for reference data</ows:Abstract>
+			<ows:Identifier>SOURCE</ows:Identifier>
+			<wps:ComplexData>
+				<wps:Format mimeType="text/xml" encoding="UTF-8"
+					schema="http://schemas.opengis.net/gml/3.2.1/feature.xsd"
+					default="true" />
+				<wps:Format mimeType="application/json" encoding="UTF-8" />
+				<wps:Format mimeType="application/x-zipped-shp" />
+			</wps:ComplexData>
+		</wps:Input>
+		<wps:Input minOccurs="1" maxOccurs="1">
+			<ows:Title>Type for reference</ows:Title>
+			<ows:Abstract>Type for reference</ows:Abstract>
+			<ows:Identifier>TYPE</ows:Identifier>
+			<wps:LiteralData>
+				<wps:Format mimeType="text/plain" default="true" />
+				<LiteralDataDomain default="true">
+					<ows:AllowedValues>
+						<ows:Value>ATKIS</ows:Value>
+						<ows:Value>MANUAL</ows:Value>
+					</ows:AllowedValues>
+					<ows:DataType
+						ows:reference="http://www.w3.org/2001/XMLSchema#string">String</ows:DataType>
+				</LiteralDataDomain>
+			</wps:LiteralData>
+		</wps:Input>
+	</wps:Input>
+	<wps:Output minOccurs="1" maxOccurs="unbounded">
+		<ows:Title>Land cover classification result products</ows:Title>
+		<ows:Abstract>Reference on the result products for the land cover classification
+		</ows:Abstract>
+		<ows:Identifier>PRODUCT</ows:Identifier>
+		<wps:ComplexData>
+			<wps:Format mimeType="image/geotiff" default="true" />
+		</wps:ComplexData>
+	</wps:Output>
+</wps:Process>
+
