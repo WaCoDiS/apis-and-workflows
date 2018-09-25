@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wps:Execute xmlns:wps="http://www.opengis.net/wps/2.0"
+	xmlns:ows="http://www.opengis.net/ows/2.0"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.opengis.net/wps/2.0 ../wps.xsd"
+	service="WPS" version="2.0.0" response="document" mode="async">
+
+	<ows:Identifier>de.hsbo.wacodis.land_cover_classification
+	</ows:Identifier>
+	<wps:Input id="OPTICAL_IMAGES">
+		<wps:Input id="SOURCE">
+			<wps:Data>S2A_OPER_MSI_L1C_DS_MTI__20150812T174654_S20150806T102012_N01.03
+			</wps:Data>
+		</wps:Input>
+		<wps:Input id="SOURCE">
+			<wps:Data>S2A_OPER_MSI_L1C_DS_MTI__20150812T174654_S20150806T102012_N02.03
+			</wps:Data>
+		</wps:Input>
+		<wps:Input id="TYPE">
+			<wps:Data>Sentinel-2</wps:Data>
+		</wps:Input>
+	</wps:Input>
+	<wps:Input id="REFERENCE_DATA">
+		<wps:Input id="SOURCE">
+			<wps:Reference
+				xlink:href="http://some.data.server/atkis_gml_data.xml" />
+		</wps:Input>
+		<wps:Input id="TYPE">
+			<wps:Data>ATKIS</wps:Data>
+		</wps:Input>
+	</wps:Input>
+
+	<!-- Query the default output format for the the result "PRODUCT" -->
+	<!-- The result "PRODUCT" shall be delivered by reference in its default 
+		format -->
+	<wps:Output id="PRODUCT" transmission="reference" />
+
+</wps:Execute>
