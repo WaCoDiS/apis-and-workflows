@@ -220,11 +220,38 @@ components:
         created:
           type: string
           format: date-time
-        timeInterval:
-          type: string
-          format: duration
+        execution:
+          type: object
           description: |
-            if present, this describe the recurrency of a WacodisJobDefinition. if not present, the WacodisJobDefinition is treated as a one-time WacodisJobDefinition
+                if present, this describe the execution pattern of a WacodisJobDefinition. if not present,
+                the WacodisJobDefinition is treated as a one-time execution.
+                Only one of the properties shall be provided.
+          properties:
+            pattern:
+              type: string
+              description: |
+                The format follows the cron syntax with the first five fields
+                (see: http://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
+            event:
+              type: object
+              description: |
+                the execution is scheduled by the occurence of an event (e.g. new data available); WIP - format to be defined.
+        temporalCoverage:
+          type: object
+          description: |
+            definition of temporal coverage for which input data (see SubsetDefinitions) is of relevancy.
+            Only one of the properties shall be provided.
+          properties:
+            duration:
+              type: string
+              format: duration
+              description: |
+                the duration in ISO8601 duration format (https://en.wikipedia.org/wiki/ISO_8601#Durations)
+                the processing component will treat the duration as backwards. A duration of "P1M" will cover the last month before execution
+            previousExecution:
+              type: boolean
+              description: |
+                input data coverage since the last execution of the job. This is only valid in combination with pattern execution
         areaOfInterest:
           type: object
           required:
@@ -258,7 +285,7 @@ components:
           type: string
           # the discriminator needs to have the same value as the schema objects name. this works at least
           # with spring generator and jackson deserialization
-          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'GdiDeSubsetDefinition']
+          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueDeSubsetDefinition']
           description: |
             shall be used to determine the responsible data backend
       discriminator:
@@ -270,11 +297,14 @@ components:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object
           required:
+          - serviceUrl
           - offering
           - featureOfInterest
           - observedProperty
           - procedure
           properties:
+            serviceUrl:
+              type: string
             offering:
               type: string
             featureOfInterest:
@@ -297,17 +327,21 @@ components:
             maximumCloudCoverage:
               type: number
               format: float
-    GdiDeSubsetDefinition:
+    CatalogueDeSubsetDefinition:
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object
           required:
-          - catalogueId
+          - identifier
+          - serviceUrl
           properties:
-            catalogueId:
+            identifier:
               description: |
-                the id of the dataset within the GDI-DE catalogue
+                the id of the dataset within the catalogue
               type: string
+            serviceUrl:
+              description: |
+                the base URL of the catalogue
     Error:
       required:
         - code
