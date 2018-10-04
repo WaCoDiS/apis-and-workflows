@@ -285,7 +285,7 @@ components:
           type: string
           # the discriminator needs to have the same value as the schema objects name. this works at least
           # with spring generator and jackson deserialization
-          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueDeSubsetDefinition']
+          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueSubsetDefinition']
           description: |
             shall be used to determine the responsible data backend
       discriminator:
@@ -327,7 +327,7 @@ components:
             maximumCloudCoverage:
               type: number
               format: float
-    CatalogueDeSubsetDefinition:
+    CatalogueSubsetDefinition:
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object

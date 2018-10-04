@@ -116,8 +116,8 @@ components:
       $ref: './wacodis-schemas.yml#/components/schemas/SensorWebSubsetDefinition'
     CopernicusSubsetDefinition:
       $ref: './wacodis-schemas.yml#/components/schemas/CopernicusSubsetDefinition'
-    CatalogueDeSubsetDefinition:
-      $ref: './wacodis-schemas.yml#/components/schemas/CatalogueDeSubsetDefinition'
+    CatalogueSubsetDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/CatalogueSubsetDefinition'
     Error:
       $ref: './wacodis-schemas.yml#/components/schemas/Error'
   parameters:
