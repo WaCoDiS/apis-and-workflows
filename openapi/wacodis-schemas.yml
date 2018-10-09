@@ -220,6 +220,12 @@ components:
         created:
           type: string
           format: date-time
+        lastFinishedExecution:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: ['waiting', 'running', 'deleted']
         execution:
           type: object
           description: |
@@ -288,10 +294,13 @@ components:
           enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueSubsetDefinition']
           description: |
             shall be used to determine the responsible data backend
+        identifier:
+          type: string
       discriminator:
         propertyName: sourceType
       required:
         - sourceType
+        - identifier
     SensorWebSubsetDefinition:
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
@@ -332,10 +341,10 @@ components:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object
           required:
-          - identifier
+          - datasetIdentifier
           - serviceUrl
           properties:
-            identifier:
+            datasetIdentifier:
               description: |
                 the id of the dataset within the catalogue
               type: string
