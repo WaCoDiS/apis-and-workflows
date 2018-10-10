@@ -4,6 +4,7 @@ rm -rf ./build
 lib/openapi-generator-cli.sh generate -g spring \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobdefinition.controller \
+    -DserializableModel=true \
     -DdateLibrary=joda \
     -i job-definition-api.yml \
     -o ./build/job-definition-api

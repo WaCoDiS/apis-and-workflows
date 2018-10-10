@@ -28,6 +28,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     -Dmodels \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobdefinition.controller \
+    -DserializableModel=true \
     -DdateLibrary=joda \
     -i job-definition-api.yml \
     -o ./build/job-definition-api
@@ -40,6 +41,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     -Dapis \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobdefinition.controller \
+    -DserializableModel=true \
     -DdateLibrary=joda \
     -i job-definition-api.yml \
     -o ./build/job-definition-api
@@ -52,6 +54,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     -DsupportingFiles \
     --model-package=de.wacodis.api.model \
     --api-package=de.wacodis.jobdefinition.controller \
+    -DserializableModel=true \
     -DdateLibrary=joda \
     -i job-definition-api.yml \
     -o ./build/job-definition-api
@@ -75,6 +78,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     -Dmodels \
     --model-package=de.wacodis.dataaccess.model \
     --api-package=de.wacodis.dataaccess.controller \
+    -DserializableModel=true \
     -DdateLibrary=joda \
     -i data-access.yml \
     -o ./build/data-access
@@ -87,6 +91,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     -Dapis \
     --model-package=de.wacodis.dataaccess.model \
     --api-package=de.wacodis.dataaccess.controller \
+    -DserializableModel=true \
     -DdateLibrary=joda \
     -i data-access.yml \
     -o ./build/data-access
@@ -99,6 +104,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     -DsupportingFiles \
     --model-package=de.wacodis.dataaccess.model \
     --api-package=de.wacodis.dataaccess.controller \
+    -DserializableModel=true \
     -DdateLibrary=joda \
     -i data-access.yml \
     -o ./build/data-access
