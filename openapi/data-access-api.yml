@@ -15,7 +15,7 @@ info:
 servers:
   - url: http://localhost/dataAccess
 paths:
-  /search:
+  /resources/search:
     post:
       description: |
         searches for specific spatial data
@@ -34,19 +34,21 @@ paths:
           content:
             application/json:
               schema:
+                description: |
+                  return empty array if no matching resource was found
                 type: array
                 items:
                   $ref: '#/components/schemas/AbstractResource'
         '500':
           $ref: '#/components/responses/defaultError'
-  /insert:
+  /dataenvelopes:
     post:
       description: |
-        insert resource
-      operationId: insertResource
+        create DataEnvelope
+      operationId: createResource
       requestBody:
         description: |
-          data envelope for the resource to be inserted
+          DataEnvelope to be created
         required: true
         content:
           application/json:
@@ -54,11 +56,126 @@ paths:
               $ref: '#/components/schemas/AbstractDataEnvelope'
       responses:
         '201':
-          description: OK
+          description: |
+            DataEnvelope created
+          content:
+            application/json:
+              schema:
+                description: id of created DataEnvelope
+                type: string
+        '500':
+          $ref: '#/components/responses/defaultError'
+  /dataenvelopes/{id}:
+    get: 
+      description: |
+        retrieve DataEnvelope by Id
+      operationId: retrieveDataEnvelope
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of DataEnvelope to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: resource available
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AbstractDataEnvelope'
+        '404':
+          description: |
+            no DataEnvelope available for the given id
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          $ref: '#/components/responses/defaultError'
+    put:
+      description: |
+        update DataEnvelope
+      operationId: modifyDataEnvelope
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of DataEnvelope to be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: |
+          resource
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AbstractDataEnvelope'
+      responses:
+        '200':
+          description: DataEnvelope updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbstractDataEnvelope'
+        '404':
+          description: |
+            no DataEnvelope available for the given ID
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          $ref: '#/components/responses/defaultError'
+    delete:
+      description: |
+        delete DataEnvelope
+      operationId: deleteDataEnvelope
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of DataEnvelope to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: DataEnvelope deleted
+        '404':
+          description: |
+            no DataEnvelope available for the given id
+          content:
+            application/json:
+              schema:
+                type: string
+        '500':
+          $ref: '#/components/responses/defaultError'
+  /dataenvelopes/search:
+    post:
+      description: |
+        retrieve Id for DataEnvelope
+      operationId: retrieveDataEnvelopeID
+      requestBody:
+        description: |
+          data envelope for the resource to be created
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AbstractDataEnvelope'
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                description: ID of matching DataEnvelope
+                type: string
+                nullable: true
         '500':
           $ref: '#/components/responses/defaultError'
 components:
@@ -83,8 +200,8 @@ components:
       $ref: './wacodis-schemas.yml#/components/schemas/SensorWebSubsetDefinition'
     CopernicusSubsetDefinition:
       $ref: './wacodis-schemas.yml#/components/schemas/CopernicusSubsetDefinition'
-    GdiDeSubsetDefinition:
-      $ref: './wacodis-schemas.yml#/components/schemas/GdiDeSubsetDefinition'
+    CatalogueSubsetDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/CatalogueSubsetDefinition'
     Error:
       $ref: './wacodis-schemas.yml#/components/schemas/Error'
   responses:
