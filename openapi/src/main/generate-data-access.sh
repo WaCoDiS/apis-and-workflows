@@ -6,7 +6,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     --api-package=de.wacodis.dataaccess.controller \
     -DserializableModel=true \
     -DdateLibrary=joda \
-    -i data-access-api.yml \
+    -i .definitions/data-access-api.yml \
     -o ./build/data-access-api
 
 lib/google-format-java-cli.sh --aosp --replace ./build/data-access-api/src/main/java/de/wacodis/dataaccess/model/* ./build/data-access-api/src/main/java/de/wacodis/dataaccess/controller/*
