@@ -6,7 +6,7 @@ lib/openapi-generator-cli.sh generate -g spring \
     --api-package=de.wacodis.jobdefinition.controller \
     -DserializableModel=true \
     -DdateLibrary=joda \
-    -i .definitions/job-definition-api.yml \
+    -i ./definitions/job-definition-api.yml \
     -o ./build/job-definition-api
 
 lib/google-format-java-cli.sh --aosp --replace ./build/job-definition-api/src/main/java/de/wacodis/api/model/* ./build/job-definition-api/src/main/java/de/wacodis/jobdefinition/controller/*
