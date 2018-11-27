@@ -27,9 +27,7 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/AbstractSubsetDefinition'
+              $ref: '#/components/schemas/DataAccessResourceSearchBody'
       responses:
         '200':
           description: OK
@@ -209,6 +207,8 @@ components:
       $ref: './wacodis-schemas.yml#/components/schemas/CopernicusSubsetDefinition'
     CatalogueSubsetDefinition:
       $ref: './wacodis-schemas.yml#/components/schemas/CatalogueSubsetDefinition'
+    DataAccessResourceSearchBody:
+      $ref: './wacodis-schemas.yml#/components/schemas/DataAccessResourceSearchBody'
     Error:
       $ref: './wacodis-schemas.yml#/components/schemas/Error'
   responses:
