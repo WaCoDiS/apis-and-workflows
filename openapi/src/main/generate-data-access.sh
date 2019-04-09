@@ -1,5 +1,6 @@
 #!/bin/bash
 rm -rf ./build
+export OPENAPI_GENERATOR_VERSION=3.3.4
 
 lib/openapi-generator-cli.sh generate -g spring \
     --model-package=de.wacodis.dataaccess.model \
