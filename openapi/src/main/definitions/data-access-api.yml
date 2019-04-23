@@ -66,8 +66,9 @@ paths:
           content:
             application/json:
               schema:
-                description: id of created DataEnvelope
-                type: string
+                description: |
+                  created DataEnvelope including indentifier
+                $ref: '#/components/schemas/AbstractDataEnvelope'
         '500':
           $ref: '#/components/responses/defaultError'
   /dataenvelopes/{id}:
@@ -178,8 +179,9 @@ paths:
           content:
             application/json:
               schema:
-                description: ID of matching DataEnvelope
-                type: string
+                description: |
+                    matching existing DataEnvelope including identifier
+                $ref: '#/components/schemas/AbstractDataEnvelope'
                 nullable: true
         '500':
           $ref: '#/components/responses/defaultError'
