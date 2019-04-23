@@ -86,7 +86,7 @@ components:
         identifier:
           type: string
           description: |
-            id assigned by data access, otherwise attribute non-existend
+            id assigned by data access, otherwise attribute non-existent
     SensorWebDataEnvelope:
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
