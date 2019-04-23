@@ -83,6 +83,10 @@ components:
           format: date-time
           description: |
             time on which the dataset was modified last
+        identifier:
+          type: string
+          description: |
+            id assigned by data access, otherwise attribute non-existend
     SensorWebDataEnvelope:
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
