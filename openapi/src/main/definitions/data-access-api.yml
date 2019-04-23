@@ -180,9 +180,14 @@ paths:
             application/json:
               schema:
                 description: |
-                    matching existing DataEnvelope including identifier
-                $ref: '#/components/schemas/AbstractDataEnvelope'
-                nullable: true
+                 matching existing DataEnvelopes including identifier
+                type: object
+                additionalProperties:
+                  description: |
+                    empty array if no matching DataEnvelope was found
+                  type: array
+                  items: 
+                    $ref: '#/components/schemas/AbstractDataEnvelope'
         '500':
           $ref: '#/components/responses/defaultError'
 components:
