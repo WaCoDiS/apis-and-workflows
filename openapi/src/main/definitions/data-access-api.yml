@@ -130,10 +130,6 @@ paths:
         '404':
           description: |
             no DataEnvelope available for the given ID
-          content:
-            application/json:
-              schema:
-                type: string
         '500':
           $ref: '#/components/responses/defaultError'
     delete:
@@ -154,10 +150,6 @@ paths:
         '404':
           description: |
             no DataEnvelope available for the given id
-          content:
-            application/json:
-              schema:
-                type: string
         '500':
           $ref: '#/components/responses/defaultError'
   /dataenvelopes/search:
