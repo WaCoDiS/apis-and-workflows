@@ -33,7 +33,7 @@ components:
       properties:
         sourceType:
           type: string
-          enum: ['SensorWebDataEnvelope', 'CopernicusDataEnvelope', 'GdiDeDataEnvelope']
+          enum: ['SensorWebDataEnvelope', 'CopernicusDataEnvelope', 'GdiDeDataEnvelope', 'DwdDataEnvelope']
           description: |
             shall be used to determine the responsible data backend
         areaOfInterest:
@@ -144,6 +144,22 @@ components:
             recordRefId:
               description: |
                 the id of the dataset within the GDI-DE catalogue
+              type: string
+    DwdDataEnvelope:
+       allOf:
+        - $ref: '#/components/schemas/AbstractDataEnvelope'
+        - type: object
+          required:
+          - layerName
+          - parameter
+          properties:
+            layerName:
+              description: |
+                the name of the queried layer
+              type: string
+            parameter:
+              description: |
+                designation of the layer as a clear name
               type: string
     AbstractResource:
       properties:
@@ -295,7 +311,7 @@ components:
           type: string
           # the discriminator needs to have the same value as the schema objects name. this works at least
           # with spring generator and jackson deserialization
-          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueSubsetDefinition']
+          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueSubsetDefinition', 'DwdSubsetDefinition']
           description: |
             shall be used to determine the responsible data backend
         identifier:
@@ -355,6 +371,41 @@ components:
             serviceUrl:
               description: |
                 the base URL of the catalogue
+    DwdSubsetDefinition:
+      allOf:
+        - $ref: '#/components/schemas/AbstractSubsetDefinition'
+        - type: object
+          required:
+          - serviceUrl
+          - layerName
+          - timestamp
+          - bbox
+          properties:
+            serviceUrl:
+              description: |
+                the base URL of the service
+              type: string
+            layerName:
+              description: 
+                the name of the queried layer
+              type: string
+            timestamp:
+              description: |
+                the temporal filter.
+                Format is "yyyy-MM-dd'T'HH:mm:ss:SS'Z'"
+              type: string
+            bbox:
+              description: |
+                the spatial filter.
+                Schema is [minLon, minLat, maxLon, maxLat]
+              type: array
+              minItems: 4
+              maxItems: 4
+              items:
+                type: number
+                format: float
+                minimum: -180.0
+                maximum: 180.0
     DataAccessResourceSearchBody:
       properties:
         areaOfInterest: 
