@@ -151,19 +151,16 @@ components:
         - type: object
           required:
           - layerName
-          - parameters
+          - parameter
           properties:
             layerName:
               description: |
                 the name of the queried layer
               type: string
-            parameters:
+            parameter:
               description: |
-                the output attributes
-              type: list
-                enum: ['GEOM', 'BEOBACHTER_GUID', 'STATION_ID', 'STATION_NAME', 'ZEITSTEMPEL', 'WERT', 'QUALITAET_NIVEAU', 'QUALITAET_BYTE']
-                items:
-                type: string
+                designation of the layer as a clear name
+              type: string
     AbstractResource:
       properties:
         url:
