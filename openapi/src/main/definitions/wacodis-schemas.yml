@@ -150,9 +150,12 @@ components:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
         - type: object
           required:
+          - serviceUrl
           - layerName
           - parameter
           properties:
+            serviceUrl:
+              type: string
             layerName:
               description: |
                 the name of the queried layer
@@ -316,6 +319,8 @@ components:
             shall be used to determine the responsible data backend
         identifier:
           type: string
+          description: |
+            identifier for matching analysis process inputs
       discriminator:
         propertyName: sourceType
       required:
@@ -389,23 +394,6 @@ components:
               description: 
                 the name of the queried layer
               type: string
-            timestamp:
-              description: |
-                the temporal filter.
-                Format is "yyyy-MM-dd'T'HH:mm:ss:SS'Z'"
-              type: string
-            bbox:
-              description: |
-                the spatial filter.
-                Schema is [minLon, minLat, maxLon, maxLat]
-              type: array
-              minItems: 4
-              maxItems: 4
-              items:
-                type: number
-                format: float
-                minimum: -180.0
-                maximum: 180.0
     DataAccessResourceSearchBody:
       properties:
         areaOfInterest: 
