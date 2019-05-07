@@ -399,9 +399,9 @@ components:
                 the spatial filter.
                 Schema is [minLon, minLat, maxLon, maxLat]
               type: array
-                minItems: 4
-                maxItems: 4
-                items:
+              minItems: 4
+              maxItems: 4
+              items:
                 type: number
                 format: float
                 minimum: -180.0
