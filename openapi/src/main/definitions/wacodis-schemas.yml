@@ -33,7 +33,7 @@ components:
       properties:
         sourceType:
           type: string
-          enum: ['SensorWebDataEnvelope', 'CopernicusDataEnvelope', 'GdiDeDataEnvelope']
+          enum: ['SensorWebDataEnvelope', 'CopernicusDataEnvelope', 'GdiDeDataEnvelope', 'DwdDataEnvelope']
           description: |
             shall be used to determine the responsible data backend
         areaOfInterest:
@@ -144,6 +144,25 @@ components:
             recordRefId:
               description: |
                 the id of the dataset within the GDI-DE catalogue
+              type: string
+    DwdDataEnvelope:
+       allOf:
+        - $ref: '#/components/schemas/AbstractDataEnvelope'
+        - type: object
+          required:
+          - serviceUrl
+          - layerName
+          - parameter
+          properties:
+            serviceUrl:
+              type: string
+            layerName:
+              description: |
+                the name of the queried layer
+              type: string
+            parameter:
+              description: |
+                designation of the layer as a clear name
               type: string
     AbstractResource:
       properties:
@@ -295,11 +314,13 @@ components:
           type: string
           # the discriminator needs to have the same value as the schema objects name. this works at least
           # with spring generator and jackson deserialization
-          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueSubsetDefinition']
+          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueSubsetDefinition', 'DwdSubsetDefinition']
           description: |
             shall be used to determine the responsible data backend
         identifier:
           type: string
+          description: |
+            identifier for matching analysis process inputs
       discriminator:
         propertyName: sourceType
       required:
@@ -355,6 +376,24 @@ components:
             serviceUrl:
               description: |
                 the base URL of the catalogue
+    DwdSubsetDefinition:
+      allOf:
+        - $ref: '#/components/schemas/AbstractSubsetDefinition'
+        - type: object
+          required:
+          - serviceUrl
+          - layerName
+          - timestamp
+          - bbox
+          properties:
+            serviceUrl:
+              description: |
+                the base URL of the service
+              type: string
+            layerName:
+              description: 
+                the name of the queried layer
+              type: string
     DataAccessResourceSearchBody:
       properties:
         areaOfInterest: 
