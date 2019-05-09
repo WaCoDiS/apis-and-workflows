@@ -163,19 +163,12 @@ paths:
               $ref: '#/components/schemas/AbstractDataEnvelope'
       responses:
         '200':
-          description: ok
+          description: |
+                ok, matching existing DataEnvelope including identifier
           content:
             application/json:
               schema:
-                description: |
-                 matching existing DataEnvelopes including identifier
-                type: object
-                additionalProperties:
-                  description: |
-                    empty array if no matching DataEnvelope was found
-                  type: array
-                  items: 
-                    $ref: '#/components/schemas/AbstractDataEnvelope'
+                $ref: '#/components/schemas/AbstractDataEnvelope'
         '500':
           $ref: '#/components/responses/defaultError'
 components:
