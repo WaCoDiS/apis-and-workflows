@@ -441,6 +441,21 @@ components:
        -  areaOfInterest
        -  timeFrame
        -  inputs
+    ProductDescription:
+      properties:
+        jobIdentifier:
+          type: string
+        outputIdentifiers:
+          type: array
+          items: 
+            type: string 
+          minItems: 1
+        productCollection:
+          type: string
+      required:
+        - jobIdentifier
+        - outputIndetifiers
+        - productCollection
     Error:
       required:
         - code
