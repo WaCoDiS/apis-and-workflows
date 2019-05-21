@@ -33,7 +33,7 @@ components:
       properties:
         sourceType:
           type: string
-          enum: ['SensorWebDataEnvelope', 'CopernicusDataEnvelope', 'GdiDeDataEnvelope', 'DwdDataEnvelope']
+          enum: ['SensorWebDataEnvelope', 'CopernicusDataEnvelope', 'GdiDeDataEnvelope', 'DwdDataEnvelope', 'WacodisProductDataEnvelope']
           description: |
             shall be used to determine the responsible data backend
         areaOfInterest:
@@ -163,6 +163,27 @@ components:
             parameter:
               description: |
                 designation of the layer as a clear name
+              type: string
+    WacodisProductDataEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/AbstractDataEnvelope'
+        - type: object
+          required:
+          - productCollection
+          - productType
+          - serviceName
+          properties:
+            productCollection:
+              description: |
+                collection to which the new product is part of
+              type: string
+            productType:
+              description: |
+                the type of the product (collection). e.g. "land cover classification"
+              type: string
+            serviceName:
+              description: |
+                the reference to the service (e.g. Image Server name)
               type: string
     AbstractResource:
       properties:
