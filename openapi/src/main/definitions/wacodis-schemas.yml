@@ -455,7 +455,7 @@ components:
             type: string 
           minItems: 1
           description: |
-            wps output indentifiers
+            wps output identifiers
         productCollection:
           type: string
           description: |
