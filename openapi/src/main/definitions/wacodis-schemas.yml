@@ -462,7 +462,7 @@ components:
            collection to which the output data should be added
       required:
         - jobIdentifier
-        - outputIndetifiers
+        - outputIdentifiers
         - productCollection
     Error:
       required:
