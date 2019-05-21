@@ -448,7 +448,7 @@ components:
         jobIdentifier:
           type: string
           description: |
-            wps job indentifier
+            wps job identifier
         outputIdentifiers:
           type: array
           items: 
