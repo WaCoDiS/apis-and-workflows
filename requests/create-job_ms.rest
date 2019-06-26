@@ -1,0 +1,28 @@
+POST https://wacodis.demo.52north.org/wacodis-job-definition-api/jobDefinitions HTTP/1.1
+content-type: application/json
+
+{  
+   "areaOfInterest":{  
+      "extent":[  
+         7.496795, 51.874795, 7.76184, 52.021233
+      ]
+   },
+   "description":"sentinel-test-job muenster area",
+   "execution":{  
+      "pattern": "02 18 * * *",
+      "_comment": "Execute at 9:13 (server time) every day"
+   },
+    "inputs": [ {
+        "identifier": "SENTINEL-2_URL",
+        "sourceType": "CopernicusSubsetDefinition",
+        "maximumCloudCoverage": 10.0,
+        "satellite": "sentinel-2"
+    }],
+   "name":"sentinel-test-job",
+   "processingTool":"de.hsbo.wacodis.snap.s2togeotiff",
+   "productCollection": "EO:WACODIS:DAT:S2A_RAW",
+   "temporalCoverage":{  
+      "duration":"P14D"
+   },
+   "useCase":"UC123"
+}

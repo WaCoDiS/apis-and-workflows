@@ -1,0 +1,2 @@
+GET https://wacodis.demo.52north.org/wacodis-wps/service?service=WPS&version=2.0.0&request=DescribeProcess&identifier=de.hsbo.wacodis.snap.s2togeotiff HTTP/1.1
+Accept: application/xml
