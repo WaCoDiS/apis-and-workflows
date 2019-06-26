@@ -490,6 +490,53 @@ components:
         - jobIdentifier
         - outputIdentifiers
         - productCollection
+    WacodisJobExecution:
+      description: |
+       message to indicate a job execution is being started
+      properties:
+        jobIdentifier:
+          type: string
+          description: |
+            wps job identifier
+        processingTool:
+          type: string
+          description: |
+            the processingTool ID as provided by the WPS tool wrapper
+        productCollection:
+          type: string
+          description: |
+            collection to which the output data will be added when it becomes available
+        created:
+          type: string
+          format: date-time
+          description: |
+            time on which the execution was invoked
+      required:
+        - jobIdentifier
+        - processingTool
+        - productCollection
+        - created
+    WacodisJobFailed:
+      description: |
+       message to indicate a job execution is being started
+      properties:
+        jobIdentifier:
+          type: string
+          description: |
+            wps job identifier
+        reason:
+          type: string
+          description: |
+            status message describing the reason of failure
+        created:
+          type: string
+          format: date-time
+          description: |
+            time on which the execution has been identified as failed
+      required:
+        - jobIdentifier
+        - reason
+        - created
     Error:
       required:
         - code
