@@ -340,7 +340,7 @@ components:
           type: string
           # the discriminator needs to have the same value as the schema objects name. this works at least
           # with spring generator and jackson deserialization
-          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueSubsetDefinition', 'DwdSubsetDefinition']
+          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueSubsetDefinition', 'DwdSubsetDefinition', 'StaticSubsetDefinition']
           description: |
             shall be used to determine the responsible data backend
         identifier:
@@ -417,9 +417,28 @@ components:
                 the base URL of the service
               type: string
             layerName:
-              description: 
+              description: |
                 the name of the queried layer
               type: string
+    StaticSubsetDefinition:
+      allOf:
+        - $ref: '#/components/schemas/AbstractSubsetDefinition'
+        - type: object
+          required:
+          - serviceUrl
+          - layerName
+          - timestamp
+          - bbox
+          properties:
+            value:
+              description: |
+                string encoded value
+              type: string
+            dataType:
+              description: |
+                determines how the value should be interpreted
+              type: string
+              enum: ['text', 'numeric']     
     DataAccessResourceSearchBody:
       properties:
         areaOfInterest: 
