@@ -26,6 +26,8 @@ paths:
 components:
   schemas:
     AbstractDataEnvelope:
+      description: |
+        abstract type that describes basic metadata information about a dataset
       required:
         - sourceType
       discriminator:
@@ -35,7 +37,7 @@ components:
           type: string
           enum: ['SensorWebDataEnvelope', 'CopernicusDataEnvelope', 'GdiDeDataEnvelope', 'DwdDataEnvelope', 'WacodisProductDataEnvelope']
           description: |
-            shall be used to determine the responsible data backend
+            shall be used to determine the responsible data envelope
         areaOfInterest:
           type: object
           required:
@@ -88,6 +90,8 @@ components:
           description: |
             id assigned by data access, otherwise attribute non-existent
     SensorWebDataEnvelope:
+      description:
+        describes specific metadata information about a Sensor Web dataset
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
         - type: object
@@ -109,6 +113,8 @@ components:
             procedure:
               type: string
     CopernicusDataEnvelope:
+      description:
+        describes specific metadata information about a Copernicus dataset
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
         - type: object
@@ -131,6 +137,8 @@ components:
               type: string
               enum: [Code-DE, Sentinel-Hub]
     GdiDeDataEnvelope:
+      description:
+        describes specific metadata information about a dataset from a catalogue service that is part of a SDI
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
         - type: object
@@ -146,7 +154,9 @@ components:
                 the id of the dataset within the GDI-DE catalogue
               type: string
     DwdDataEnvelope:
-       allOf:
+      description:
+        describes specific information about a dataset from the German Weather Services
+      allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
         - type: object
           required:
@@ -165,6 +175,8 @@ components:
                 designation of the layer as a clear name
               type: string
     WacodisProductDataEnvelope:
+      description:
+        describes specific metadata information about a product dataset created from the WaCoDiS System
       allOf:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
         - type: object
@@ -172,20 +184,63 @@ components:
           - productCollection
           - productType
           - serviceName
+          - process
           properties:
-            productCollection:
-              description: |
-                collection to which the new product is part of
-              type: string
             productType:
               description: |
                 the type of the product (collection). e.g. "land cover classification"
               type: string
-            serviceName:
+            dataEnvelopeReferences:
               description: |
-                the reference to the service (e.g. Image Server name)
+                array of identfiers that reference data envelopes the WaCoDiS product results from
+              type: array
+              items:
+                type: string
+            process:
+              description: |
+                name of the process that was responsible for creating the product
               type: string
+            backendType:
+              type: object
+              $ref: '#/components/schemas/AbstractBackend'
+    AbstractBackend:
+      description: |
+        abstract type for a backend that provides WaCoDiS products
+      discriminator:
+        propertyName: backendType
+      required:
+        - backendType
+      properties:
+        backendType:
+          type: string
+          enum: ['ArcGISImageServerBackend', 'GeoServerBackend']
+          description: |
+            shall be used to determine the responsible product backend type
+    ArcGISImageServerBackend:
+      description:
+        contains specific information about a ArcGIS Image Server product backend
+      allOf:
+        - $ref: '#/components/schemas/AbstractBackend'
+        - type: object
+          required:
+          - productCollection
+          - baseUrl
+          - serviceTypes
+          properties:
+            productCollection:
+              type: string
+              description:
+                name of the product collection
+            baseUrl:
+              type: string
+              description:
+                base URL of the ArcGIS Image Server backend
+            serviceTypes:
+              type: string
+                the supported ArcGIS Image Server services (e.g. ImageServer, WmsServer)
     AbstractResource:
+      description:
+        abstract type for a remote resource that can be identified by an URL
       properties:
         url:
           type: string
@@ -198,6 +253,8 @@ components:
         - method
         - url
     PostResource:
+      description:
+        resource that can be fetched with a HTTP POST request
       allOf:
         - $ref: '#/components/schemas/AbstractResource'
         - type: object
@@ -210,9 +267,13 @@ components:
             contentType:
               type: string
     GetResource:
+      description:
+        resource that can be fetched with a HTTP GET request
       allOf:
         - $ref: '#/components/schemas/AbstractResource'
     PaginatedResponse:
+      description:
+        represents a paginated reponse
       required:
         - page
         - size
@@ -228,6 +289,8 @@ components:
           type: integer
           format: int32
     PaginatedWacodisJobDefinitionResponse:
+      description:
+        represents a paginated reponse for WaCoDiS job definitions
       allOf:
         - $ref: '#/components/schemas/PaginatedResponse'
         - type: object
@@ -239,6 +302,8 @@ components:
               items:
                 $ref: '#/components/schemas/WacodisJobDefinition'
     WacodisJobDefinition:
+      description:
+        contains information about a WaCoDiS Job that will be used for scheduling, preparing and executing certain processes
       required:
         - name
         - areaOfInterest
@@ -260,7 +325,7 @@ components:
         useCase:
           type: string
           description: |
-            A generic use case reference. This can be used to refer to the use cases identified during the
+            a generic use case reference. This can be used to refer to the use cases identified during the
             initial phase of WaCoDiS
         created:
           type: string
@@ -335,6 +400,8 @@ components:
           items:
             $ref: '#/components/schemas/AbstractSubsetDefinition'
     AbstractSubsetDefinition:
+      description:
+        abstract type for job input subsets
       properties:
         sourceType:
           type: string
@@ -353,6 +420,8 @@ components:
         - sourceType
         - identifier
     SensorWebSubsetDefinition:
+      description:
+        contains information for defining a subset definition for Sensor Web process inputs
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object
@@ -374,6 +443,8 @@ components:
             procedure:
               type: string
     CopernicusSubsetDefinition:
+      description:
+        contains information for defining a subset definition for Copernicus process inputs
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object
@@ -388,6 +459,8 @@ components:
               type: number
               format: float
     CatalogueSubsetDefinition:
+      description:
+        contains information for defining a subset definition for process inputs from catalogue service
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object
@@ -403,6 +476,8 @@ components:
               description: |
                 the base URL of the catalogue
     DwdSubsetDefinition:
+      description:
+        contains information for defining a subset definition for German weather service process inputs
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object
@@ -421,6 +496,8 @@ components:
                 the name of the queried layer
               type: string
     WacodisProductSubsetDefinition:
+      description:
+        contains information for defining a subset definition for WaCoDiS product process inputs
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object
@@ -441,6 +518,8 @@ components:
                 data type
               type: string
     StaticSubsetDefinition:
+      description:
+        contains information for defining a subset definition for static process inputs
       allOf:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object
@@ -458,6 +537,8 @@ components:
               type: string
               enum: ['text', 'numeric']     
     DataAccessResourceSearchBody:
+      description:
+        represents POST body parameters that will be used for requesting dataset resource from the DataAccess API
       properties:
         areaOfInterest: 
           type: object
@@ -506,7 +587,7 @@ components:
        -  inputs
     ProductDescription:
       description: |
-       message to indicate a finished wps job
+        message to indicate a finished wps job
       properties:
         jobIdentifier:
           type: string
@@ -578,11 +659,6 @@ components:
           format: date-time
           description: |
             time on which the dataset was created
-        modified:
-          type: string
-          format: date-time
-          description: |
-            time on which the dataset was modified last
     WacodisJobExecution:
       description: |
        message to indicate a job execution is being started
