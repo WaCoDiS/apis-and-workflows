@@ -248,6 +248,10 @@ components:
         method:
           type: string
           enum: ['GetResource', 'PostResource']
+        dataEnvelopeId: 
+          type: string
+          description: |
+            the ID (assigned by data access) of the DataEnvelope from which this resource was derived
       discriminator:
         propertyName: method
       required:
