@@ -237,6 +237,7 @@ components:
                 base URL of the ArcGIS Image Server backend
             serviceTypes:
               type: string
+              description: |
                 the supported ArcGIS Image Server services (e.g. ImageServer, WmsServer)
     AbstractResource:
       description:
