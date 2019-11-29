@@ -609,10 +609,18 @@ components:
           type: string
           description: |
            collection to which the output data should be added
+        dataEnvelopeReferences:
+          type: array
+          items:
+            type: string
+        processingTool:
+          type: string
       required:
         - jobIdentifier
         - outputIdentifiers
         - productCollection
+        - dataEnvelopeReferences
+        - processingTool
     ProcessingMetadata:
       description: |
         extensible datatype for metadata that describes the processing of a product
