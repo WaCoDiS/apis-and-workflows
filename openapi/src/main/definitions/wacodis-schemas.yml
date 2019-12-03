@@ -200,7 +200,7 @@ components:
               description: |
                 name of the process that was responsible for creating the product
               type: string
-            backendType:
+            serviceDefinition:
               type: object
               $ref: '#/components/schemas/AbstractBackend'
     AbstractBackend:
@@ -236,9 +236,11 @@ components:
               description:
                 base URL of the ArcGIS Image Server backend
             serviceTypes:
-              type: string
+              type: array
               description: |
                 the supported ArcGIS Image Server services (e.g. ImageServer, WmsServer)
+              items:
+                type: string
     AbstractResource:
       description:
         abstract type for a remote resource that can be identified by an URL

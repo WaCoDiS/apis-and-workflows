@@ -14,7 +14,7 @@
     "dataEnvelopeReferences": ["3dc81da2-111a-11ea-8d71-362b9e155667", "3dc8211c-111a-11ea-8d71-362b9e155667"],
     "process": "de.hsbo.wacodis.land_cover_classification",
     "serviceDefinition" : {
-        "backendType": "ArcGIS Image Server",
+        "backendType": "ArcGISImageServerBackend",
         "productCollection": "EO:WACODIS:DAT:LAND_COVER_CLASSIFICATION",
         "baseUrl": "wacodis.arcgis.demo/arcgis/rest/services/wacodis",
         "serviceTypes": ["ImageServer", "WmsServer"]
