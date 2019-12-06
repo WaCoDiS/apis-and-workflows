@@ -114,6 +114,14 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        description: |
+          WacodisJobDefinition to add to the repository
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WacodisJobDefinition'
       responses:
         '200':
           description: |
