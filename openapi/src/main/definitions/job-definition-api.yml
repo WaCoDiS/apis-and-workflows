@@ -1,192 +1,140 @@
 openapi: "3.0.0"
 info:
   version: 0.1.0
-  title: WaCoDiS DataAccess API
+  title: WaCoDiS JobDefinition API
   description: |
-    The API for the WaCoDiS Data Access
+    The API for the WaCoDiS JobDefinitions
   termsOfService: https://wacodis.fbg-hsbo.de/
   contact:
     name: WaCoDiS Dev Team
-    email: arne.vogt@hs-bochum.de
+    email: m.rieke@52north.org
     url: https://github.com/WaCoDiS
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: http://localhost/dataAccess
+  - url: http://localhost
 paths:
-  /resources/search:
-    post:
+  /jobDefinitions:
+    get:
       description: |
-        searches for specific spatial data
-      operationId: searchResources
-      requestBody:
-        description: |
-          search criteria
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DataAccessResourceSearchBody'
+        Returns a paginated list of WacodisJobDefinition
+      operationId: retrieveWacodisJobDefinitions
+      parameters:
+        - $ref: '#/components/parameters/PagePage'
+        - $ref: '#/components/parameters/PageSize'
       responses:
         '200':
-          description: OK
+          description: |
+            WacodisJobDefinition response
           content:
             application/json:
               schema:
-                description: |
-                  return a map containing matching Resources for each SubsetDefinition
-                  (key SubsetDefinition Identifier, value Array of matching Resources)
-                type: object
-                additionalProperties:
-                  description: |
-                    empty array if no matching resource was found
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/AbstractResource'
+                $ref: '#/components/schemas/PaginatedWacodisJobDefinitionResponse'
         '500':
-          $ref: '#/components/responses/defaultError'
-  /dataenvelopes:
+          $ref: '#/components/responses/DefaultError'
     post:
       description: |
-        create DataEnvelope
-      operationId: createResource
+        Creates a new WacodisJobDefinition in the repository
+      operationId: createWacodisJobDefinition
       requestBody:
         description: |
-          DataEnvelope to be created
+          WacodisJobDefinition to add to the repository
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AbstractDataEnvelope'
+              $ref: '#/components/schemas/WacodisJobDefinition'
       responses:
         '201':
           description: |
-            DataEnvelope created
+            WacodisJobDefinition response
           content:
             application/json:
               schema:
-                description: |
-                  created DataEnvelope including indentifier
-                $ref: '#/components/schemas/AbstractDataEnvelope'
+                $ref: '#/components/schemas/WacodisJobDefinition'
+          headers:
+            Location:
+              schema:
+                type: string
+              description: |
+                the URL where to access the newly created WacodisJobDefinition
         '500':
-          $ref: '#/components/responses/defaultError'
-  /dataenvelopes/{id}:
-    get: 
+          $ref: '#/components/responses/DefaultError'
+  /jobDefinitions/{id}:
+    get:
       description: |
-        retrieve DataEnvelope by Id
-      operationId: retrieveDataEnvelope
+        Returns a WacodisJobDefinition based on a single ID
+      operationId: retrieveWacodisJobDefinitionById
       parameters:
         - name: id
           in: path
           description: |
-            ID of DataEnvelope to retrieve
+            ID of WacodisJobDefinition to retrieve
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: resource available
+          description: |
+            WacodisJobDefinition response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AbstractDataEnvelope'
-        '404':
-          description: |
-            no DataEnvelope available for the given id
+                $ref: '#/components/schemas/WacodisJobDefinition'
         '500':
-          $ref: '#/components/responses/defaultError'
-    put:
-      description: |
-        update DataEnvelope
-      operationId: modifyDataEnvelope
-      parameters:
-        - name: id
-          in: path
-          description: |
-            ID of DataEnvelope to be updated
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: |
-          resource
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AbstractDataEnvelope'
-      responses:
-        '200':
-          description: DataEnvelope updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AbstractDataEnvelope'
-        '404':
-          description: |
-            no DataEnvelope available for the given ID
-        '500':
-          $ref: '#/components/responses/defaultError'
+          $ref: '#/components/responses/DefaultError'
     delete:
       description: |
-        delete DataEnvelope
-      operationId: deleteDataEnvelope
+        deletes a single WacodisJobDefinition based on the ID supplied
+      operationId: deleteWacodisJobDefinition
       parameters:
         - name: id
           in: path
           description: |
-            ID of DataEnvelope to be deleted
+            ID of WacodisJobDefinition to delete
           required: true
           schema:
             type: string
       responses:
         '204':
-          description: DataEnvelope deleted
-        '404':
           description: |
-            no DataEnvelope available for the given id
+            WacodisJobDefinition deleted
         '500':
-          $ref: '#/components/responses/defaultError'
-  /dataenvelopes/search:
-    post:
+          $ref: '#/components/responses/DefaultError'
+    patch:
       description: |
-        retrieve Id for DataEnvelope
-      operationId: retrieveDataEnvelopeID
-      requestBody:
-        description: |
-          data envelope for the resource to be created
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AbstractDataEnvelope'
+        update a single WacodisJobDefinition based on the ID supplied
+      operationId: updateWacodisJobDefinition
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of WacodisJobDefinition to be updated
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: |
-                ok, matching existing DataEnvelope including identifier
+            updated WacodisJobDefinition
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AbstractDataEnvelope'
+                $ref: '#/components/schemas/WacodisJobDefinition'
+        '404':
+          description: |
+            no WacodisJobDefinition available for the given id
         '500':
-          $ref: '#/components/responses/defaultError'
+          $ref: '#/components/responses/DefaultError'
 components:
   schemas:
-    AbstractDataEnvelope:
-      $ref: './wacodis-schemas.yml#/components/schemas/AbstractDataEnvelope'
-    SensorWebDataEnvelope:
-      $ref: './wacodis-schemas.yml#/components/schemas/SensorWebDataEnvelope'
-    CopernicusDataEnvelope:
-      $ref: './wacodis-schemas.yml#/components/schemas/CopernicusDataEnvelope'
-    GdiDeDataEnvelope:
-      $ref: './wacodis-schemas.yml#/components/schemas/GdiDeDataEnvelope'
-    AbstractResource:
-      $ref: './wacodis-schemas.yml#/components/schemas/AbstractResource'
-    PostResource:
-      $ref: './wacodis-schemas.yml#/components/schemas/PostResource'
-    GetResource:
-      $ref: './wacodis-schemas.yml#/components/schemas/GetResource'
+    PaginatedResponse:
+      $ref: './wacodis-schemas.yml#/components/schemas/PaginatedResponse'
+    PaginatedWacodisJobDefinitionResponse:
+      $ref: './wacodis-schemas.yml#/components/schemas/PaginatedWacodisJobDefinitionResponse'
+    WacodisJobDefinition:
+      $ref: './wacodis-schemas.yml#/components/schemas/WacodisJobDefinition'
     AbstractSubsetDefinition:
       $ref: './wacodis-schemas.yml#/components/schemas/AbstractSubsetDefinition'
     SensorWebSubsetDefinition:
@@ -195,12 +143,29 @@ components:
       $ref: './wacodis-schemas.yml#/components/schemas/CopernicusSubsetDefinition'
     CatalogueSubsetDefinition:
       $ref: './wacodis-schemas.yml#/components/schemas/CatalogueSubsetDefinition'
-    DataAccessResourceSearchBody:
-      $ref: './wacodis-schemas.yml#/components/schemas/DataAccessResourceSearchBody'
     Error:
       $ref: './wacodis-schemas.yml#/components/schemas/Error'
+  parameters:
+    PagePage:
+      name: page
+      in: query
+      description: |
+        the page as an offset (default=0)
+      required: false
+      schema:
+        type: integer
+        format: int32
+    PageSize:
+      name: size
+      in: query
+      description: |
+        the maximum number of results (default=100)
+      required: false
+      schema:
+        type: integer
+        format: int32
   responses:
-    defaultError:
+    DefaultError:
       description: |
         unexpected error
       content:
