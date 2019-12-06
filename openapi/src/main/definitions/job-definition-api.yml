@@ -102,21 +102,14 @@ paths:
             WacodisJobDefinition deleted
         '500':
           $ref: '#/components/responses/DefaultError'
+  /jobDefinitions/jobstatus/{id}:
     patch:
       description: |
-        update a single WacodisJobDefinition based on the ID supplied
-      operationId: updateWacodisJobDefinition
-      parameters:
-        - name: id
-          in: path
-          description: |
-            ID of WacodisJobDefinition to be updated
-          required: true
-          schema:
-            type: string
+        update job status, only attributes status and lastFinishedExecution are changed
+      operationId: updateJobStatus
       requestBody:
         description: |
-          WacodisJobDefinition to add to the repository
+          WacodisJobDefinition with new job status, only attributes status and lastFinishedExecution are changed
         required: true
         content:
           application/json:
