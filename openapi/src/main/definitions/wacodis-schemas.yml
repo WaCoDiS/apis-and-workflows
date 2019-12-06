@@ -617,12 +617,17 @@ components:
             type: string
         processingTool:
           type: string
+        wacodisJobIdentifier:
+          type: string
+          description: |
+            wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
       required:
         - jobIdentifier
         - outputIdentifiers
         - productCollection
         - dataEnvelopeReferences
         - processingTool
+        - wacodisJobDefinition
     ProcessingMetadata:
       description: |
         extensible datatype for metadata that describes the processing of a product
@@ -695,11 +700,16 @@ components:
           format: date-time
           description: |
             time on which the execution was invoked
+        wacodisJobIdentifier:
+          type: string
+          description: |
+            wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
       required:
         - jobIdentifier
         - processingTool
         - productCollection
         - created
+        - wacodisJobIdentifier
     WacodisJobFailed:
       description: |
        message to indicate a job execution is being started
@@ -717,10 +727,15 @@ components:
           format: date-time
           description: |
             time on which the execution has been identified as failed
+        wacodisJobIdentifier:
+          type: string
+          description: |
+            wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
       required:
         - jobIdentifier
         - reason
         - created
+        - wacodisJobIdentifier
     Error:
       required:
         - code
