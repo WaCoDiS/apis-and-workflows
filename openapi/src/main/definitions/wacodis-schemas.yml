@@ -619,6 +619,7 @@ components:
           type: string
         wacodisJobIdentifier:
           type: string
+          format: uuid
           description: |
             wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
         executionFinished:
@@ -690,6 +691,7 @@ components:
       properties:
         jobIdentifier:
           type: string
+          format: uuid
           description: |
             wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
         processingTool:
@@ -728,6 +730,7 @@ components:
             time on which the execution has been identified as failed
         wacodisJobIdentifier:
           type: string
+          format: uuid
           description: |
             wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
       required:
