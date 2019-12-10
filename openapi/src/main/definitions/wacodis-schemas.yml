@@ -341,8 +341,8 @@ components:
           type: string
           format: date-time
         status:
-          type: string
-          enum: ['waiting', 'running', 'deleted']
+          type: object
+          $ref: '#/components/schemas/WacodisJobStatus'
         execution:
           type: object
           description: |
@@ -738,6 +738,28 @@ components:
         - reason
         - created
         - wacodisJobIdentifier
+    WacodisJobStatusUpdate:
+      properties:
+        wacodisJobIdentifier:
+          type: string
+          format: uuid
+        executionFinished:
+          type: string
+          format: date-time
+          description: |
+            point in time when job execution finished successfully, only needed for updates after succesful job execution
+        newStatus:
+          type: object
+          $ref: '#/components/schemas/WacodisJobStatus'
+      required:
+        - wacodisJobIdentifier
+        - newStatus
+    WacodisJobStatus:
+      type: string
+      enum:
+        - waiting
+        - running
+        - deleted
     Error:
       required:
         - code
