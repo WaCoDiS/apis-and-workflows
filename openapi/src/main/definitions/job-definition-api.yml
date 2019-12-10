@@ -102,14 +102,14 @@ paths:
             WacodisJobDefinition deleted
         '500':
           $ref: '#/components/responses/DefaultError'
-  /jobDefinitions/jobstatus/{id}:
+  /jobDefinitions/jobstatus:
     patch:
       description: |
         update job status, only attributes status and lastFinishedExecution are changed
       operationId: updateJobStatus
       requestBody:
         description: |
-          WacodisJobDefinition with new job status, only attributes status and lastFinishedExecution are changed
+          WacodisJobDefinition with new job status, only attributes status and lastFinishedExecution are relevant
         required: true
         content:
           application/json:
