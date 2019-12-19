@@ -592,48 +592,6 @@ components:
        -  areaOfInterest
        -  timeFrame
        -  inputs
-    ProductDescription:
-      description: |
-        message to indicate a finished wps job
-      properties:
-        jobIdentifier:
-          type: string
-          description: |
-            wps job identifier
-        outputIdentifiers:
-          type: array
-          items: 
-            type: string 
-          minItems: 1
-          description: |
-            wps output identifiers
-        productCollection:
-          type: string
-          description: |
-           collection to which the output data should be added
-        dataEnvelopeReferences:
-          type: array
-          items:
-            type: string
-        processingTool:
-          type: string
-        wacodisJobIdentifier:
-          type: string
-          format: uuid
-          description: |
-            wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
-        executionFinished:
-          type: string
-          format: date-time
-          description: |
-            timestamp when message was published
-      required:
-        - jobIdentifier
-        - outputIdentifiers
-        - productCollection
-        - dataEnvelopeReferences
-        - processingTool
-        - executionFinished
     ProcessingMetadata:
       description: |
         extensible datatype for metadata that describes the processing of a product
@@ -738,6 +696,29 @@ components:
         - reason
         - created
         - wacodisJobIdentifier
+    WacodisJobFinished:
+      description: |
+        message to indicate that a job execution finished succesfully
+      properties:
+        wacodisJobIdentifier:
+          type: string
+          format: uuid
+          description: |
+            wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
+        executionFinished:
+          type: string
+          format: date-time
+          description: |
+            timestamp when message was published
+        productDescription:
+          description: |
+            contains description of the product that was produced by successfully finished job execution
+          type: object
+          $ref: '#/components/schemas/ProductDescription'
+      required:
+        - wacodisJobIdentifier
+        - executionFinished
+        - productDescription
     WacodisJobStatusUpdate:
       properties:
         wacodisJobIdentifier:
@@ -754,6 +735,38 @@ components:
       required:
         - wacodisJobIdentifier
         - newStatus
+    ProductDescription:
+      description: |
+        message to indicate a finished wps job
+      properties:
+        wpsJobIdentifier:
+          type: string
+          description: |
+            wps job identifier
+        outputIdentifiers:
+          type: array
+          items: 
+            type: string 
+          minItems: 1
+          description: |
+            wps output identifiers
+        productCollection:
+          type: string
+          description: |
+           collection to which the output data should be added
+        dataEnvelopeReferences:
+          type: array
+          items:
+            type: string
+        processingTool:
+          type: string
+      required:
+        - jobIdentifier
+        - outputIdentifiers
+        - productCollection
+        - dataEnvelopeReferences
+        - processingTool
+        - executionFinished
     WacodisJobStatus:
       type: string
       enum:
