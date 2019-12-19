@@ -647,7 +647,7 @@ components:
       description: |
        message to indicate a job execution is being started
       properties:
-        jobIdentifier:
+        wacodisJobIdentifier:
           type: string
           format: uuid
           description: |
@@ -671,9 +671,9 @@ components:
         - productCollection
     WacodisJobFailed:
       description: |
-       message to indicate a job execution is being started
+       message to indicate a job execution failed
       properties:
-        jobIdentifier:
+        wpsJobIdentifier:
           type: string
           description: |
             wps job identifier
