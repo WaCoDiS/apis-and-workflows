@@ -181,10 +181,10 @@ components:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
         - type: object
           required:
-          - productCollection
           - productType
-          - serviceName
+          - dataEnvelopeReferences
           - process
+          - serviceDefinition
           properties:
             productType:
               description: |
@@ -212,10 +212,8 @@ components:
         - backendType
       properties:
         backendType:
-          type: string
-          enum: ['ArcGISImageServerBackend', 'GeoServerBackend']
-          description: |
-            shall be used to determine the responsible product backend type
+          type: object
+          $ref: '#/components/schemas/ProductBackend'
     ArcGISImageServerBackend:
       description:
         contains specific information about a ArcGIS Image Server product backend
@@ -512,18 +510,13 @@ components:
           - serviceUrl
           - productCollection
           properties:
-            serviceUrl:
-              description: |
-                the base URL of the service from which the data should be requested
-              type: string
-            productCollection:
-              description: |
-                collection in which the data is stored
-              type: string
             productType:
               description: |
-                data type
+                the type of the product (collection). e.g. "land cover classification"
               type: string
+            backendType:
+              type: object
+              $ref: '#/components/schemas/ProductBackend'
     StaticSubsetDefinition:
       description:
         contains information for defining a subset definition for static process inputs
@@ -773,6 +766,13 @@ components:
         - waiting
         - running
         - deleted
+    ProductBackend:
+      type: string
+      enum: 
+        - ArcGISImageServerBackend
+        - GeoServerBackend
+      description: |
+            shall be used to determine the responsible product backend type
     Error:
       required:
         - code
