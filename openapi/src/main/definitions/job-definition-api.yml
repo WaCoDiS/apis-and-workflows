@@ -102,6 +102,32 @@ paths:
             WacodisJobDefinition deleted
         '500':
           $ref: '#/components/responses/DefaultError'
+  /jobDefinitions/jobstatus:
+    patch:
+      description: |
+        update job status, only attributes status and lastFinishedExecution are changed
+      operationId: updateJobStatus
+      requestBody:
+        description: |
+          WacodisJobDefinition with new job status, only attributes status and lastFinishedExecution are relevant
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WacodisJobStatusUpdate'
+      responses:
+        '200':
+          description: |
+            updated WacodisJobDefinition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WacodisJobDefinition'
+        '404':
+          description: |
+            no WacodisJobDefinition available for the given id
+        '500':
+          $ref: '#/components/responses/DefaultError'
 components:
   schemas:
     PaginatedResponse:
@@ -110,6 +136,10 @@ components:
       $ref: './wacodis-schemas.yml#/components/schemas/PaginatedWacodisJobDefinitionResponse'
     WacodisJobDefinition:
       $ref: './wacodis-schemas.yml#/components/schemas/WacodisJobDefinition'
+    WacodisJobStatusUpdate:
+      $ref: './wacodis-schemas.yml#/components/schemas/WacodisJobStatusUpdate'
+    WacodisJobStatus:
+      $ref: './wacodis-schemas.yml#/components/schemas/WacodisJobStatus'
     AbstractSubsetDefinition:
       $ref: './wacodis-schemas.yml#/components/schemas/AbstractSubsetDefinition'
     SensorWebSubsetDefinition:

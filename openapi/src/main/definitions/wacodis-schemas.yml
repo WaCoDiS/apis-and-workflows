@@ -181,10 +181,10 @@ components:
         - $ref: '#/components/schemas/AbstractDataEnvelope'
         - type: object
           required:
-          - productCollection
           - productType
-          - serviceName
+          - dataEnvelopeReferences
           - process
+          - serviceDefinition
           properties:
             productType:
               description: |
@@ -212,10 +212,8 @@ components:
         - backendType
       properties:
         backendType:
-          type: string
-          enum: ['ArcGISImageServerBackend', 'GeoServerBackend']
-          description: |
-            shall be used to determine the responsible product backend type
+          type: object
+          $ref: '#/components/schemas/ProductBackend'
     ArcGISImageServerBackend:
       description:
         contains specific information about a ArcGIS Image Server product backend
@@ -341,8 +339,8 @@ components:
           type: string
           format: date-time
         status:
-          type: string
-          enum: ['waiting', 'running', 'deleted']
+          type: object
+          $ref: '#/components/schemas/WacodisJobStatus'
         execution:
           type: object
           description: |
@@ -509,21 +507,16 @@ components:
         - $ref: '#/components/schemas/AbstractSubsetDefinition'
         - type: object
           required:
-          - serviceUrl
-          - productCollection
+          - productType
+          - backendType
           properties:
-            serviceUrl:
-              description: |
-                the base URL of the service from which the data should be requested
-              type: string
-            productCollection:
-              description: |
-                collection in which the data is stored
-              type: string
             productType:
               description: |
-                data type
+                the type of the product (collection). e.g. "land cover classification"
               type: string
+            backendType:
+              type: object
+              $ref: '#/components/schemas/ProductBackend'
     StaticSubsetDefinition:
       description:
         contains information for defining a subset definition for static process inputs
@@ -592,37 +585,6 @@ components:
        -  areaOfInterest
        -  timeFrame
        -  inputs
-    ProductDescription:
-      description: |
-        message to indicate a finished wps job
-      properties:
-        jobIdentifier:
-          type: string
-          description: |
-            wps job identifier
-        outputIdentifiers:
-          type: array
-          items: 
-            type: string 
-          minItems: 1
-          description: |
-            wps output identifiers
-        productCollection:
-          type: string
-          description: |
-           collection to which the output data should be added
-        dataEnvelopeReferences:
-          type: array
-          items:
-            type: string
-        processingTool:
-          type: string
-      required:
-        - jobIdentifier
-        - outputIdentifiers
-        - productCollection
-        - dataEnvelopeReferences
-        - processingTool
     ProcessingMetadata:
       description: |
         extensible datatype for metadata that describes the processing of a product
@@ -678,10 +640,11 @@ components:
       description: |
        message to indicate a job execution is being started
       properties:
-        jobIdentifier:
+        wacodisJobIdentifier:
           type: string
+          format: uuid
           description: |
-            wps job identifier
+            wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
         processingTool:
           type: string
           description: |
@@ -699,12 +662,11 @@ components:
         - jobIdentifier
         - processingTool
         - productCollection
-        - created
     WacodisJobFailed:
       description: |
-       message to indicate a job execution is being started
+       message to indicate a job execution failed
       properties:
-        jobIdentifier:
+        wpsJobIdentifier:
           type: string
           description: |
             wps job identifier
@@ -717,10 +679,100 @@ components:
           format: date-time
           description: |
             time on which the execution has been identified as failed
+        wacodisJobIdentifier:
+          type: string
+          format: uuid
+          description: |
+            wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
       required:
         - jobIdentifier
         - reason
         - created
+        - wacodisJobIdentifier
+    WacodisJobFinished:
+      description: |
+        message to indicate that a job execution finished succesfully
+      properties:
+        wacodisJobIdentifier:
+          type: string
+          format: uuid
+          description: |
+            wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
+        executionFinished:
+          type: string
+          format: date-time
+          description: |
+            timestamp when message was published
+        productDescription:
+          description: |
+            contains description of the product that was produced by successfully finished job execution
+          type: object
+          $ref: '#/components/schemas/ProductDescription'
+      required:
+        - wacodisJobIdentifier
+        - executionFinished
+        - productDescription
+    WacodisJobStatusUpdate:
+      properties:
+        wacodisJobIdentifier:
+          type: string
+          format: uuid
+        executionFinished:
+          type: string
+          format: date-time
+          description: |
+            point in time when job execution finished successfully, only needed for updates after succesful job execution
+        newStatus:
+          type: object
+          $ref: '#/components/schemas/WacodisJobStatus'
+      required:
+        - wacodisJobIdentifier
+        - newStatus
+    ProductDescription:
+      description: |
+        message to indicate a finished wps job
+      properties:
+        wpsJobIdentifier:
+          type: string
+          description: |
+            wps job identifier
+        outputIdentifiers:
+          type: array
+          items: 
+            type: string 
+          minItems: 1
+          description: |
+            wps output identifiers
+        productCollection:
+          type: string
+          description: |
+           collection to which the output data should be added
+        dataEnvelopeReferences:
+          type: array
+          items:
+            type: string
+        processingTool:
+          type: string
+      required:
+        - jobIdentifier
+        - outputIdentifiers
+        - productCollection
+        - dataEnvelopeReferences
+        - processingTool
+        - executionFinished
+    WacodisJobStatus:
+      type: string
+      enum:
+        - waiting
+        - running
+        - deleted
+    ProductBackend:
+      type: string
+      enum: 
+        - ArcGISImageServerBackend
+        - GeoServerBackend
+      description: |
+            shall be used to determine the responsible product backend type
     Error:
       required:
         - code
