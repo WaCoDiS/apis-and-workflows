@@ -192,14 +192,10 @@ components:
               type: string
             dataEnvelopeReferences:
               description: |
-                array of identifiers that reference data envelopes the WaCoDiS product results from
+                array of identfiers that reference data envelopes the WaCoDiS product results from
               type: array
               items:
                 type: string
-            dataEnvelopeServiceEndpoint:
-              description: |
-                contains the url of the service endpoint to retrieve DataEnvelopes that are included in the dataEnvelopeReferences attribute, for example http://localhost:8080/dataenvelopes/ (without the id)
-              type: string 
             process:
               description: |
                 name of the process that was responsible for creating the product
