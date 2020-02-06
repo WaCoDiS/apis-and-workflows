@@ -403,6 +403,21 @@ components:
           type: string
           description: |
             collection to which the output data should be added when it becomes available
+        retrySettings:
+          type: object
+          description: |
+              determine if job execution should be retried after failed execution
+          properties:
+            maxRetries:
+              type: integer
+              format: int32
+              description: |
+                maximum number of retries before job execution fails ultimately
+            retryDelay_Millies:
+              type: integer
+              format: int64
+              description: |
+                delay before retry is scheduled (in milliseconds)
         inputs:
           type: array
           minItems: 1
