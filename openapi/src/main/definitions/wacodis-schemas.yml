@@ -792,6 +792,34 @@ components:
         - GeoServerBackend
       description: |
             shall be used to determine the responsible product backend type
+    AbstractWacodisJobExecutionEvent:
+      description: |
+        abstract type to describe event-based execution of wacodis jobs
+      discriminator:
+        propertyName: eventType
+      required:
+        - eventType
+      properties:
+        eventType:
+          type: string
+          enum: ['SingleJobExecutionEvent']
+          description: |
+            shall be used to determine the sub type of AbstractWacodisJobExecutionEvent
+    SingleJobExecutionEvent:
+      description: |
+        event that describes a single execution of a wacods job without regular schedule
+      allOf:
+        - $ref: '#/components/schemas/AbstractWacodisJobExecutionEvent'
+        - type: object
+          required: 
+           - startAt
+          properties:
+            startAt:
+              type: string
+              format: date-time
+              description: |
+                date on which the wacodis job should be executed,
+                null if wacodis job should be executed immediately
     Error:
       required:
         - code
