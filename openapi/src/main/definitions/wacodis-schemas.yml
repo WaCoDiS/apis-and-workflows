@@ -359,8 +359,7 @@ components:
                 (see: http://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
             event:
               type: object
-              description: |
-                the execution is scheduled by the occurence of an event (e.g. new data available); WIP - format to be defined.
+              $ref: '#/components/schemas/AbstractWacodisJobExecutionEvent'
         temporalCoverage:
           type: object
           description: |
