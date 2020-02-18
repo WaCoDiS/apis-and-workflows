@@ -816,6 +816,7 @@ components:
             startAt:
               type: string
               format: date-time
+              nullable: true
               description: |
                 date on which the wacodis job should be executed,
                 null if wacodis job should be executed immediately
