@@ -810,8 +810,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/AbstractWacodisJobExecutionEvent'
         - type: object
-          required: 
-           - startAt
           properties:
             startAt:
               type: string
