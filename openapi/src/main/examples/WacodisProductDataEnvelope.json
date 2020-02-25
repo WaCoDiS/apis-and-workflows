@@ -1,0 +1,22 @@
+{
+    "sourceType": "WacodisProductDataEnvelope",
+    "areaOfInterest": {
+      "extent": [7.3256, 52.4262, 7.7136, 52.6214]
+    },
+    "timeFrame": {
+      "startTime": "2019-05-01T12:00:00.000Z",
+      "endTime": "2019-06-01T12:00:00.000Z"
+    },
+    "created": "2019-06-05T10:23:00.000Z",
+    "modified": "2019-06-05T10:23:00.000Z",
+    "identifier": "c78449f4-110f-11ea-9a9f-362b9e155667",   
+    "productType": "land cover classification",
+    "dataEnvelopeReferences": ["3dc81da2-111a-11ea-8d71-362b9e155667", "3dc8211c-111a-11ea-8d71-362b9e155667"],
+    "process": "de.hsbo.wacodis.land_cover_classification",
+    "serviceDefinition" : {
+        "backendType": "ArcGISImageServerBackend",
+        "productCollection": "EO:WACODIS:DAT:LAND_COVER_CLASSIFICATION",
+        "baseUrl": "wacodis.arcgis.demo/arcgis/rest/services/wacodis",
+        "serviceTypes": ["ImageServer", "WmsServer"]
+    }
+  }

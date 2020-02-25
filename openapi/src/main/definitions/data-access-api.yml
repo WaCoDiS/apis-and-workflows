@@ -27,7 +27,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AbstractSubsetDefinition'
+              $ref: '#/components/schemas/DataAccessResourceSearchBody'
       responses:
         '200':
           description: OK
@@ -35,10 +35,15 @@ paths:
             application/json:
               schema:
                 description: |
-                  return empty array if no matching resource was found
-                type: array
-                items:
-                  $ref: '#/components/schemas/AbstractResource'
+                  return a map containing matching Resources for each SubsetDefinition
+                  (key SubsetDefinition Identifier, value Array of matching Resources)
+                type: object
+                additionalProperties:
+                  description: |
+                    empty array if no matching resource was found
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/AbstractResource'
         '500':
           $ref: '#/components/responses/defaultError'
   /dataenvelopes:
@@ -61,8 +66,9 @@ paths:
           content:
             application/json:
               schema:
-                description: id of created DataEnvelope
-                type: string
+                description: |
+                  created DataEnvelope including indentifier
+                $ref: '#/components/schemas/AbstractDataEnvelope'
         '500':
           $ref: '#/components/responses/defaultError'
   /dataenvelopes/{id}:
@@ -88,10 +94,6 @@ paths:
         '404':
           description: |
             no DataEnvelope available for the given id
-          content:
-            application/json:
-              schema:
-                type: string
         '500':
           $ref: '#/components/responses/defaultError'
     put:
@@ -124,10 +126,6 @@ paths:
         '404':
           description: |
             no DataEnvelope available for the given ID
-          content:
-            application/json:
-              schema:
-                type: string
         '500':
           $ref: '#/components/responses/defaultError'
     delete:
@@ -148,10 +146,6 @@ paths:
         '404':
           description: |
             no DataEnvelope available for the given id
-          content:
-            application/json:
-              schema:
-                type: string
         '500':
           $ref: '#/components/responses/defaultError'
   /dataenvelopes/search:
@@ -169,13 +163,12 @@ paths:
               $ref: '#/components/schemas/AbstractDataEnvelope'
       responses:
         '200':
-          description: ok
+          description: |
+                ok, matching existing DataEnvelope including identifier
           content:
             application/json:
               schema:
-                description: ID of matching DataEnvelope
-                type: string
-                nullable: true
+                $ref: '#/components/schemas/AbstractDataEnvelope'
         '500':
           $ref: '#/components/responses/defaultError'
 components:
@@ -202,6 +195,8 @@ components:
       $ref: './wacodis-schemas.yml#/components/schemas/CopernicusSubsetDefinition'
     CatalogueSubsetDefinition:
       $ref: './wacodis-schemas.yml#/components/schemas/CatalogueSubsetDefinition'
+    DataAccessResourceSearchBody:
+      $ref: './wacodis-schemas.yml#/components/schemas/DataAccessResourceSearchBody'
     Error:
       $ref: './wacodis-schemas.yml#/components/schemas/Error'
   responses:

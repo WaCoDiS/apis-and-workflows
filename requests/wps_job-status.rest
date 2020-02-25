@@ -1,0 +1,3 @@
+GET https://wacodis.demo.52north.org/wacodis-wps/service?service=WPS&version=2.0.0&request=GetStatus&jobID=e2439749-557c-4fca-843d-31a4adc4098f HTTP/1.1
+Accept: application/xml
+
