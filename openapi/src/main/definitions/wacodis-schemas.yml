@@ -596,7 +596,6 @@ components:
         - areaOfInterest
         - timeFrame
         - created
-        - modified
       properties:
         areaOfInterest:
             type: object
