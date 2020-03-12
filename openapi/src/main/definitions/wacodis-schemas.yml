@@ -243,6 +243,30 @@ components:
                 the supported ArcGIS Image Server services (e.g. ImageServer, WmsServer)
               items:
                 type: string
+    GeoServerBackend:
+      description: |
+        contains specific information about a GeoServer product backend
+      allOf:
+        - $ref: '#/components/schemas/AbstractBackend'
+        - type: object
+          required:
+          - baseUrl
+          - productCollection
+          - serviceTypes
+          properties:
+            baseUrl:
+              type: string
+              description:
+                base URL of the GeoServer backend
+            productCollection:
+              type: string
+              description: |
+                name of the product collection (e.g. for WMS the layer name, for WFS the FeatureType)
+            serviceTypes:
+              type: array
+              description: |
+                the supported GeoServer services (e.g. WMS, WFS)
+
     AbstractResource:
       description:
         abstract type for a remote resource that can be identified by an URL
