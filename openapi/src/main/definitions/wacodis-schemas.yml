@@ -700,9 +700,10 @@ components:
           description: |
             time on which the execution was invoked
       required:
-        - jobIdentifier
+        - wacodisJobIdentifier
         - processingTool
         - productCollection
+        - created
     WacodisJobFailed:
       description: |
        message to indicate a job execution failed
@@ -726,7 +727,7 @@ components:
           description: |
             wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
       required:
-        - jobIdentifier
+        - wpsJobIdentifier
         - reason
         - created
         - wacodisJobIdentifier
@@ -768,6 +769,7 @@ components:
           $ref: '#/components/schemas/WacodisJobStatus'
       required:
         - wacodisJobIdentifier
+        - executionFinished
         - newStatus
     ProductDescription:
       description: |
@@ -795,12 +797,11 @@ components:
         processingTool:
           type: string
       required:
-        - jobIdentifier
+        - wpsJobIdentifier
         - outputIdentifiers
         - productCollection
         - dataEnvelopeReferences
         - processingTool
-        - executionFinished
     WacodisJobStatus:
       type: string
       enum:
