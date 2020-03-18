@@ -181,6 +181,8 @@ components:
       $ref: './wacodis-schemas.yml#/components/schemas/CopernicusDataEnvelope'
     GdiDeDataEnvelope:
       $ref: './wacodis-schemas.yml#/components/schemas/GdiDeDataEnvelope'
+    WacodisProductDataEnvelope:
+      $ref: './wacodis-schemas.yml#/components/schemas/WacodisProductDataEnvelope'
     AbstractResource:
       $ref: './wacodis-schemas.yml#/components/schemas/AbstractResource'
     PostResource:
@@ -197,6 +199,12 @@ components:
       $ref: './wacodis-schemas.yml#/components/schemas/CatalogueSubsetDefinition'
     DataAccessResourceSearchBody:
       $ref: './wacodis-schemas.yml#/components/schemas/DataAccessResourceSearchBody'
+    AbstractBackend:
+      $ref: './wacodis-schemas.yml#/components/schemas/AbstractBackend'
+    ArcGISImageServerBackend:
+      $ref: './wacodis-schemas.yml#/components/schemas/ArcGISImageServerBackend'
+    GeoServerBackend:
+      $ref: './wacodis-schemas.yml#/components/schemas/GeoServerBackend'
     Error:
       $ref: './wacodis-schemas.yml#/components/schemas/Error'
   responses:
