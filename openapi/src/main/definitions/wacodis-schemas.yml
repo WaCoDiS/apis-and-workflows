@@ -385,6 +385,12 @@ components:
             event:
               type: object
               $ref: '#/components/schemas/AbstractWacodisJobExecutionEvent'
+            startAt:
+              type: string
+              format: date-time
+              description: |
+                date on which the wacodis job should be executed for the first time,
+                null if wacodis job should be executed immediately
         temporalCoverage:
           type: object
           description: |
@@ -852,14 +858,13 @@ components:
         - $ref: '#/components/schemas/AbstractWacodisJobExecutionEvent'
         - type: object
           required: 
-           - startAt
+           - temporalCoverageEndDate
           properties:
-            startAt:
+            temporalCoverageEndDate:
               type: string
               format: date-time
               description: |
-                date on which the wacodis job should be executed,
-                null if wacodis job should be executed immediately
+                Determines together with WacodisJobDefinition.temporalCoverage.duration which time period has to be considered for inputs. The attribute WacodisJobDefinition.temporalCoverage.duration has to be specified in WacodisJobDefinition.
     Error:
       required:
         - code
