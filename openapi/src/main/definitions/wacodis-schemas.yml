@@ -264,9 +264,10 @@ components:
                 name of the product collection (e.g. for WMS the layer name, for WFS the FeatureType)
             serviceTypes:
               type: array
+              items:
+                type: string
               description: |
                 the supported GeoServer services (e.g. WMS, WFS)
-
     AbstractResource:
       description:
         abstract type for a remote resource that can be identified by an URL
