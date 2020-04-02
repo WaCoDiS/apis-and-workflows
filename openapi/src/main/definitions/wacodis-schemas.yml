@@ -507,18 +507,22 @@ components:
               type: string
               description: |
                 abbreviation for the instrument that is carried by a Sentinel mission
-                [SAR (Sentinel-1 Synthetic Aperture Radar), MSI ( Sentinel-2 MultiSpectral Instrument), OLCI (SENTINEL-3 Ocean and Land Colour Imager)
-                SLSTR (Sentinel-3 Sea and Land Surface Temperature Radiometer), SRAL (Sentinel-3 Ku/C Radar Altimeter)]
+                [SAR (Sentinel-1 Synthetic Aperture Radar), MSI ( Sentinel-2 MultiSpectral Instrument)]
+            sensorMode:
+              type: string
+              description:
+                abbreviation for sensor mode used by Sentinel-1 satellite instruments
+                [EW (Extra Wide), IW (Interferometric Wide), SM (Stripmap), WV (Wave)]
             productType:
               type: string
               description: |
                 abbreviation for the product type of the Copernicus subset 
-                [GRD (Ground Range Detected), SLC (Single Look Complex), OCN (Ocean), LAN (Land), RBT (Radiances and Brightness Temperature), LST (Land Surface Temperature)]
+                [RAW (raw data), GRD (Ground Range Detected), SLC (Single Look Complex), OCN (Ocean), L1C (Sentinel-2 Level 1C), L2A (Sentinel-2 Level 2A)]
             productLevel:
               type: string
               description: |
                 abbreviation for the level of the Copernicus product (e.g)
-                [L1, L2, L1C, L2A]
+                [LEVEL0, LEVEL1, LEVEL2, LEVEL1C, LEVEL2A]
             maximumCloudCoverage:
               type: number
               format: float
