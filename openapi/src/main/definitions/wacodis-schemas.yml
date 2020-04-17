@@ -864,6 +864,48 @@ components:
               description: |
                 date on which the wacodis job should be executed,
                 null if wacodis job should be executed immediately
+    ProcessMapping:
+      description: |
+        definitions to map WaCoDiS WPS processes to supported inputs and product collections
+      required:
+        - processId
+        - name
+        - productCollections
+        - inputTypes
+      properties:
+        processId:
+          description: |
+            WPS process identifier
+          type: string
+        name:
+          description: |
+            display name for the WPS process
+          type: string
+        productCollections:
+          description: |
+            supported product collections
+          type: array
+          items:
+            type: string
+        inputs:
+          description: | 
+            required inputs
+          type: array
+          items:
+            $ref: '#/components/schemas/InputMapping'
+    InputMapping:
+      description: |
+        mapping between input types and WPS process identifiers
+      properties:
+        inputType:
+          description: |
+            the input type
+          type: string
+          enum: ['SensorWebSubsetDefinition', 'CopernicusSubsetDefinition', 'CatalogueSubsetDefinition', 'DwdSubsetDefinition', 'StaticSubsetDefinition', 'WacodisProductSubsetDefinition']
+        processInputId:
+          description: |
+            identifier of the WPS process input
+          type: string
     Error:
       required:
         - code
