@@ -130,6 +130,23 @@ components:
             satellite:
               type: string
               enum: [sentinel-1, sentinel-2, sentinel-3]
+            instrument: 
+              type: string
+              description: |
+                abbreviation for the instrument that is carried by a Sentinel mission
+                [SAR (Sentinel-1 Synthetic Aperture Radar), MSI ( Sentinel-2 MultiSpectral Instrument)]
+            sensorMode:
+              type: string
+              description: | 
+                abbreviation for sensor mode used by Sentinel-1 satellite instruments [EW (Extra Wide), IW (Interferometric Wide), SM (Stripmap), WV (Wave)]
+            productType:
+              type: string
+              description: | 
+                abbreviation for the product type of the Copernicus subset [RAW (raw data), GRD (Ground Range Detected), SLC (Single Look Complex), OCN (Ocean), L1C (Sentinel-2 Level 1C), L2A (Sentinel-2 Level 2A)]
+            productLevel: 
+              type: string
+              description: |
+                 abbreviation for the level of the Copernicus product (e.g) [LEVEL0, LEVEL1, LEVEL2, LEVEL1C, LEVEL2A]
             cloudCoverage:
               type: number
               format: float
@@ -510,7 +527,7 @@ components:
                 [SAR (Sentinel-1 Synthetic Aperture Radar), MSI ( Sentinel-2 MultiSpectral Instrument)]
             sensorMode:
               type: string
-              description:
+              description: |
                 abbreviation for sensor mode used by Sentinel-1 satellite instruments
                 [EW (Extra Wide), IW (Interferometric Wide), SM (Stripmap), WV (Wave)]
             productType:
