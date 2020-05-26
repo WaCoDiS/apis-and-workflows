@@ -171,6 +171,32 @@ paths:
                 $ref: '#/components/schemas/AbstractDataEnvelope'
         '500':
           $ref: '#/components/responses/defaultError'
+  /dataenvelopes/explore:
+    post:
+      description: |
+        retrieve Id for DataEnvelope
+      operationId: retrieveDataEnvelopeID
+      requestBody:
+        description: |
+          query parameters that should be matched
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataEnvelopeQuery'
+      responses:
+        '200':
+          description: |
+                list of matching DataEnvelopes, empty list if no match
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AbstractDataEnvelope'
+        '500':
+          $ref: '#/components/responses/defaultError'
+  
 components:
   schemas:
     AbstractDataEnvelope:
@@ -205,6 +231,8 @@ components:
       $ref: './wacodis-schemas.yml#/components/schemas/ArcGISImageServerBackend'
     GeoServerBackend:
       $ref: './wacodis-schemas.yml#/components/schemas/GeoServerBackend'
+    DataEnvelopeQuery:
+      $ref: './wacodis-schemas.yml#/components/schemas/DataEnvelopeQuery'
     Error:
       $ref: './wacodis-schemas.yml#/components/schemas/Error'
   responses:
