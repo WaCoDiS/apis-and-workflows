@@ -151,11 +151,11 @@ paths:
   /dataenvelopes/search:
     post:
       description: |
-        retrieve Id for DataEnvelope
+        retrieve Id for existing DataEnvelope
       operationId: retrieveDataEnvelopeID
       requestBody:
         description: |
-          data envelope for the resource to be created
+          DataEnvelope that should be matched
         required: true
         content:
           application/json:
@@ -174,8 +174,8 @@ paths:
   /dataenvelopes/explore:
     post:
       description: |
-        retrieve Id for DataEnvelope
-      operationId: retrieveDataEnvelopeID
+        query for existing DataEnvelopes
+      operationId: queryExistingDataEnvelopes
       requestBody:
         description: |
           query parameters that should be matched
