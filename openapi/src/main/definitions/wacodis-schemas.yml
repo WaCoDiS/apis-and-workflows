@@ -937,6 +937,7 @@ components:
                 type: string
                 enum:
                  - equals
+                 - not
                  - lesser
                  - greater
                  - lesserOrEquals
