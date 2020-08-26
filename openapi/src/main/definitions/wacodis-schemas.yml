@@ -669,10 +669,15 @@ components:
       description: |
         extensible datatype for metadata that describes the processing of a product
       required: 
+        - process
         - areaOfInterest
         - timeFrame
         - created
       properties:
+        process:
+          description: |
+            name of the process that was responsible for creating the product
+          type: string
         areaOfInterest:
             type: object
             required:
