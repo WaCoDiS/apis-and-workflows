@@ -361,6 +361,7 @@ components:
         - processingTool
         - inputs
         - productCollection
+        - executionSettings
       properties:
         id:
           type: string
@@ -419,11 +420,17 @@ components:
               format: duration
               description: |
                 the duration in ISO8601 duration format (https://en.wikipedia.org/wiki/ISO_8601#Durations)
-                the processing component will treat the duration as backwards. A duration of "P1M" will cover the last month before execution
+                the processing component will treat the duration as backwards considering optional offset. A duration of "P1M" will cover the last month before execution (without offset). This temporal coverage might be overriden by input specifc temporal coverage (see AbstractSubsetDefinition)
             previousExecution:
               type: boolean
               description: |
                 input data coverage since the last execution of the job. This is only valid in combination with pattern execution
+            offset:
+              type: string
+              format: duration
+              description: |
+                the duration in ISO8601 duration format (https://en.wikipedia.org/wiki/ISO_8601#Durations)
+                the processing component will treat the duration as backwards. A duration of "P1M" will cover the last month before execution
         areaOfInterest:
           type: object
           required:
@@ -465,6 +472,27 @@ components:
               format: int64
               description: |
                 delay before retry is scheduled (in milliseconds)
+        executionSettings:
+          type: object
+          required: 
+           - executionMode
+          properties:
+            executionMode:
+              type: string
+              enum: ['all', 'split', 'best']
+              default: 'best'
+              description: '
+                if multiple input data sets are available:
+                all: all inputs will be included in one processing request,
+                split: job will be splitted in multiple processing requests (split by pivotal input), 
+                best: only one processing request for input data set which is considered the best (by Data Access)
+                  (best input is selected for pivotalInput)'
+            pivotalInput:
+              type: string
+              description: |
+               only applicable if executionMode is 'split' or 'best',
+                must match a input identifier (see AbstractSubsetDefinition.identifier)
+                if not provided first input of type CopernicusSubsetDefinition is assumed
         inputs:
           type: array
           minItems: 1
@@ -485,6 +513,25 @@ components:
           type: string
           description: |
             identifier for matching analysis process inputs
+        temporalCoverage:
+          description: |
+            input specific definition of temporal coverage for which dat is of relevancy.
+            Optinonal, if not provided temporalCoverage of WacodisJobDefinition must be considered
+          required:
+            - duration
+          properties:
+            offset:
+              type: string
+              format: duration
+              description: |
+                the duration in ISO8601 duration format (https://en.wikipedia.org/wiki/ISO_8601#Durations)
+                the processing component will treat the duration as backwards from the scheduled time of execution.
+            duration:
+              type: string
+              format: duration
+              description: |
+                the duration in ISO8601 duration format (https://en.wikipedia.org/wiki/ISO_8601#Durations)
+                the processing component will treat the duration as backwards from the scheduled time of execution considering optional offset
       discriminator:
         propertyName: sourceType
       required:
