@@ -514,6 +514,7 @@ components:
           description: |
             identifier for matching analysis process inputs
         temporalCoverage:
+          type: object
           description: |
             input specific definition of temporal coverage for which dat is of relevancy.
             Optinonal, if not provided temporalCoverage of WacodisJobDefinition must be considered
