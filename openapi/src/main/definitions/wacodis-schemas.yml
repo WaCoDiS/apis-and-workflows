@@ -493,6 +493,11 @@ components:
                only applicable if executionMode is 'split' or 'best',
                 must match a input identifier (see AbstractSubsetDefinition.identifier)
                 if not provided first input of type CopernicusSubsetDefinition is assumed
+            timeout_millies: 
+              type: integer
+              format: int64
+              description: |
+               optional timeout (in milliseconds) for process execution, no timeout if not provided or <= 0
         inputs:
           type: array
           minItems: 1
