@@ -828,11 +828,17 @@ components:
           format: uuid
           description: |
             wacodis job identifer (from WacodisJobDefinition, not wps job identifier!)
+        singleExecutionJob:
+          type: boolean
+          default: false
+          description: |
+           indicates if finished wacodis job is single execution job (SingleJobExecutionEvent)
       required:
         - wpsJobIdentifier
         - reason
         - created
         - wacodisJobIdentifier
+        - singleExecutionJob
     WacodisJobFinished:
       description: |
         message to indicate that a job execution finished succesfully
@@ -852,10 +858,16 @@ components:
             contains description of the product that was produced by successfully finished job execution
           type: object
           $ref: '#/components/schemas/ProductDescription'
+        singleExecutionJob:
+          type: boolean
+          default: false
+          description: |
+           indicates if finished wacodis job is single execution job (SingleJobExecutionEvent)
       required:
         - wacodisJobIdentifier
         - executionFinished
         - productDescription
+        - singleExecutionJob
     WacodisJobStatusUpdate:
       properties:
         wacodisJobIdentifier:
