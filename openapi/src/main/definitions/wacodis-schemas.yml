@@ -910,6 +910,7 @@ components:
         - waiting
         - running
         - deleted
+        - finished
     ProductBackend:
       type: string
       enum: 
