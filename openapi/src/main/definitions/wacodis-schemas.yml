@@ -127,6 +127,10 @@ components:
             datasetId:
               description:
                 the id of the
+            footprint:
+              type: string
+              description: |
+                the footprint representing the spatial coverage without NODATA values of the Copernicus dataset as GeoJSON string
             satellite:
               type: string
               enum: [sentinel-1, sentinel-2, sentinel-3]
