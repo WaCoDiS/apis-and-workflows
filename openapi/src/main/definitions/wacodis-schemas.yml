@@ -837,12 +837,18 @@ components:
           default: false
           description: |
            indicates if finished wacodis job is single execution job (SingleJobExecutionEvent)
+        finalJobProcess:
+          type: boolean
+          default: true
+          description: |
+            indicates if last (sub-) process of Wacodis Job execution
       required:
         - wpsJobIdentifier
         - reason
         - created
         - wacodisJobIdentifier
         - singleExecutionJob
+        - finalJobProcess
     WacodisJobFinished:
       description: |
         message to indicate that a job execution finished succesfully
@@ -867,11 +873,17 @@ components:
           default: false
           description: |
            indicates if finished wacodis job is single execution job (SingleJobExecutionEvent)
+        finalJobProcess:
+          type: boolean
+          default: true
+          description: |
+            indicates if last (sub-) process of Wacodis Job execution
       required:
         - wacodisJobIdentifier
         - executionFinished
         - productDescription
         - singleExecutionJob
+        - finalJobProcess
     WacodisJobStatusUpdate:
       properties:
         wacodisJobIdentifier:
