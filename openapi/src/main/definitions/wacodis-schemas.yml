@@ -1055,6 +1055,11 @@ components:
           default: true
           description: |
             if 'false' this output is expected but will not be added to productCollection (see WacodisJobDescription) afterwards
+        asReference:
+          type: boolean
+          default: true
+          description: |
+            specifies whether output can be obtained as reference (true, default) or 'inline' (false)
       required:
         - identifier
         - mimeType
