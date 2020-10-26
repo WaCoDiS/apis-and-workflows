@@ -507,6 +507,10 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/AbstractSubsetDefinition'
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobOutputDescriptor'
     AbstractSubsetDefinition:
       description:
         abstract type for job input subsets
@@ -1034,6 +1038,26 @@ components:
                  - greater
                  - lesserOrEquals
                  - greaterOrEquals
+    JobOutputDescriptor:
+      description: |
+       specifies an expected job output
+      properties:
+        identifier:
+          type: string
+          description: |
+            name (id) of the expected output
+        mimeType:
+          type: string
+          description: |
+            mime type of the expected output
+        publishedOutput: 
+          type: boolean
+          default: true
+          description: |
+            if 'false' this output is expected but will not be added to productCollection (see WacodisJobDescription) afterwards
+      required:
+        - identifier
+        - mimeType
     Error:
       required:
         - code
