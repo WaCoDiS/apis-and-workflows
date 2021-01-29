@@ -1,4 +1,4 @@
-# WaCoDiS Metadata Connector
+# WaCoDiS APIs and Workflows
 ![Java CI](https://github.com/WaCoDiS/metadata-connector/workflows/Java%20CI/badge.svg)
   
 The WaCoDiS APIs and Workflows repository contains schema definitions of the common WaCoDiS data model and diagrams that depicture the architecture and workflow of the WaCoDiS system.
@@ -29,16 +29,32 @@ For a detailed overview about the WaCoDiS system architecture please visit the
 
 ## Overview  
 
+This repository hosts the definitions for APIs, data models and business workflows for the WaCoDiS system architecture.
+
 ### Technologies
 * __OpenAPI__  
 [OpenAPI](https://github.com/OAI/OpenAPI-Specification) is used for the specification of data models used within this project.
 
-### OpenAPI
+### Data models
+
+All APIs and data models are defined using OpenAPI 2.0 (aka Swagger).
+File contents can be used to generate service or client stubs or pasted
+into the Swagger Editor (http://editor.swagger.io/).
+
 The OpenAPI subfolder contains OpenAPI definitions for the common core data model of WaCoDiS and the REST interfaces of WaCoDiS Data Access API and WaCoDiS Job Definition API. 
 * The core data types shared across all WaCoDiS components are defined in the [*wacodis-schemas* file](https://github.com/WaCoDiS/apis-and-workflows/blob/master/openapi/src/main/definitions/wacodis-schemas.yml).
 * The [*data-access-api* file](https://github.com/WaCoDiS/apis-and-workflows/blob/master/openapi/src/main/definitions/data-access-api.yml) contains the definition of the REST API of [WaCoDiS Data Access API](https://github.com/WaCoDiS/data-access-api).
 * The [*job-definition-api* file](https://github.com/WaCoDiS/apis-and-workflows/blob/master/openapi/src/main/definitions/job-definition-api.yml) contains the definition of the REST API of [WaCoDiS Job Management API](https://github.com/WaCoDiS/job-definition-api).
 
+## Sequence diagrams
+
+Sequence diagrams are created with https://www.websequencediagrams.com/.
+File contents can be pasted into the application to generate visualizations.
+
+## Component diagrams
+
+Component diagrams are created with https://www.draw.io/.
+Files can be loaded into the application to generate visualizations.
 
 ## Installation / Building Information
 ### Generate source code from OpenAPI definitions
@@ -78,25 +94,3 @@ The research project WaCoDiS is funded by the BMVI as part of the [mFund program
   <img src="https://raw.githubusercontent.com/WaCoDiS/apis-and-workflows/master/misc/logos/bmvi.jpg" height="100">
 </p>
 
-
-
-# Purpose
-
-This repository hosts the definitions for APIs, data models and
-business workflows for the WaCoDiS system architecture.
-
-## Data models
-
-All APIs and data models are defined using OpenAPI 2.0 (aka Swagger).
-File contents can be used to generate service or client stubs or pasted
-into the Swagger Editor (http://editor.swagger.io/).
-
-## Sequence diagrams
-
-Sequence diagrams are created with https://www.websequencediagrams.com/.
-File contents can be pasted into the application to generate visualizations.
-
-## Component diagrams
-
-Component diagrams are created with https://www.draw.io/.
-Files can be loaded into the application to generate visualizations.
